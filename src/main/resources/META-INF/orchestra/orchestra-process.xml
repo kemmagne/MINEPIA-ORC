@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orchestra-process xmlns="http://www.guichetunique.org/orchestra/schema/orchestra-process" 
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp"
+				   xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" 
+				   xmlns:http="http://www.mulesoft.org/schema/mule/http"
+				   xmlns:file="http://www.mulesoft.org/schema/mule/file"
+				   xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3"
+				   xsi:schemaLocation="http://www.guichetunique.org/orchestra/schema/orchestra-process http://www.guichetunique.org/orchestra/schema/orchestra-process/1.1/process.xsd">
+	<process>
+		<id>arho</id>
+		<name>Autorisation d'importation des echantillons</name>
+		<version>1.0.0</version>
+		<i18n-name>arho.name</i18n-name>
+		<bpms>jbpm-4.4</bpms>
+		<process-name>ARHO</process-name>
+		<description>Autorisation d'importation des echantillons</description>
+		<initializer-group>CAD</initializer-group>
+		<processing-class>org.guce.orchestra.process.arho.ARHOProcessing</processing-class>
+		<configuration>
+			<flow-config-properties-file>org/guce/orchestra/process/arho/resources/arho.properties</flow-config-properties-file>
+			<i18n-path>org/guce/orchestra/process/arho/i18n</i18n-path>
+			<params-file>org/guce/orchestra/process/arho/resources/params.properties</params-file>
+		</configuration>
+		<process-definition-file>org/guce/orchestra/process/arho/resources/arho.jpdl.xml</process-definition-file>
+	</process>
+	<partners>
+		<partner>
+			<id>MINADER</id>
+			<name>Ministère </name>
+		</partner>
+	</partners>
+	<groups>
+		<group>
+			<id>DOUANE</id>
+			<name>DOUANE</name>
+		</group>
+		<group>
+			<id>IMPORTATEUR</id>
+			<name>IMPORTATEUR</name>
+		</group>
+		<group>
+			<id>CAD</id>
+			<name>Comissionaire agrée en douane</name>
+		</group>
+	</groups>
+	<partner-group-mapping>
+		<partner-group>
+			<partner-id>DOUANE1</partner-id>
+			<group-id>DOUANE</group-id>
+		</partner-group>
+	</partner-group-mapping>
+	<process-roles>
+		<role>
+			<role-name>PROCESS_INITIALIZER</role-name>
+			<group-id>CAD</group-id>
+		</role>
+	</process-roles>
+	<transformers>
+	</transformers>
+	<message-types>
+		<message-type>
+			<type>AH001</type>
+			<i18n-name>arho.message.AH001</i18n-name>
+			<default-name>AH001</default-name>
+		</message-type>
+		<message-type>
+			<type>AH002</type>
+			<i18n-name>arho.message.AH002</i18n-name>
+			<default-name>AH002</default-name>
+		</message-type>
+		<message-type>
+			<type>AH003</type>
+			<i18n-name>arho.message.AH003</i18n-name>
+			<default-name>AH003</default-name>
+		</message-type>
+		<message-type>
+			<type>AH004</type>
+			<i18n-name>arho.message.AH004</i18n-name>
+			<default-name>AH004</default-name>
+		</message-type>
+	</message-types>
+	<processing-types></processing-types>
+	<task-list>
+		<task>
+			<name>InitialisationFichePivo</name>
+			<i18n-name>arho.task.InitialisationFichePivo</i18n-name>
+			<default-name>Initialisation fiche PIVO</default-name>
+		</task>
+	</task-list>
+	<database-script>
+	</database-script>
+	<entities>
+	</entities>
+	<inbound-endpoints>
+		<!--<endpoint>
+			<id>arho.endpoint.in.pop3.pad</id>
+			<name>Depot des demandes de facturation au PAD</name>
+			<scope>process</scope>
+			<type>SMTP</type>
+			<transformer-class>org.guce.orchestra.process.arho.transformer.in.PADInboundTranformer</transformer-class>
+			<definition>
+				<pop3:inbound-endpoint 
+					connector-ref="connector.orchestra.pop3"
+					host="${arho.in.pop3.pad.url}" password="${arho.in.pop3.pad.password}" 
+					port="${endpoint.in.pop3.port}" user="${arho.in.pop3.pad}" />
+			</definition>
+		</endpoint>
+		<endpoint>
+			<id>arho.endpoint.in.ftp.pad</id>
+			<name>Endpoint pad de reception des facurations</name>
+			<scope>process</scope>
+			<type>FTP</type>
+			<transformer-class>org.guce.orchestra.process.arho.transformer.in.PADInboundTranformer</transformer-class>
+			<definition>
+				<ftp:inbound-endpoint
+					binary="${arho.input.ftp.pad.binary}" host="${arho.input.ftp.pad.host}" connector-ref="arho.connector.ftp.pad"
+					password="${arho.input.ftp.pad.password}" user="${arho.input.ftp.pad.user}" 
+					pollingFrequency="${arho.input.ftp.pad.pollingFrequency}" 
+					port="${arho.input.ftp.pad.port}" path="${arho.input.ftp.pad.path}" 
+					passive="${arho.input.ftp.pad.passive}" >
+					<file:filename-wildcard-filter pattern="*.xml,*.XML" />
+				</ftp:inbound-endpoint>
+			</definition>
+		</endpoint>-->
+	</inbound-endpoints>
+	<outbound-endpoints>
+		<!--<endpoint>
+			<id>arho.endpoint.out.smtp.pad</id>
+			<name>Depot des demandes de facturation au PAD</name>
+			<scope>process</scope>
+			<type>SMTP</type>
+			<transformer-class>org.guce.orchestra.process.arho.transformer.out.PADOutboundTransformer</transformer-class>
+			<definition>
+				<smtp:outbound-endpoint 
+					from="${endpoint.out.smtp.from}" host="${arho.out.smtp.pad.url}" 
+					user="${endpoint.out.smtp.user}" password="${endpoint.out.smtp.password}"
+					port="${endpoint.out.smtp.port}" to="${arho.out.smtp.pad}"
+					subject="#[header:OUTBOUND:arho.file.name]"
+					transformer-refs="exitTransformer" />
+			</definition>
+		</endpoint>-->
+		
+	</outbound-endpoints>
+	<partner-endpoint-mapping>
+		
+	</partner-endpoint-mapping>
+</orchestra-process>
