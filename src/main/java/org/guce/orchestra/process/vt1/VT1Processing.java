@@ -1,4 +1,4 @@
-package org.guce.orchestra.process.arho;
+package org.guce.orchestra.process.vt1;
 
 import hk.hku.cecid.ebms.pkg.MessageHeader;
 
@@ -40,11 +40,11 @@ import org.guce.orchestra.util.JAXBUtil;
 import org.mule.api.MuleMessage;
 import org.w3c.dom.Document;
 
-public class ARHOProcessing extends AbstractProcessProcessing implements ProcessProcessing {
+public class VT1Processing extends AbstractProcessProcessing implements ProcessProcessing {
 
     public static int SIMULATION_COUNT = 0;
 
-    public ARHOProcessing() {
+    public VT1Processing() {
 
     }
 
@@ -57,13 +57,13 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
     @Override
     public String processingType(OrchestraEbxmlMessage ebxml, boolean isInbound, Map params) {
         String action = ebxml.getAction();
-        if ((action.equals(ARHOConstants.AH001) && isInbound) || ((action.equals(ARHOConstants.AH011) && !isInbound))) {
-            return ARHOConstants.AH001;
-        } else if (action.equals(ARHOConstants.AH001)
-                || action.equals(ARHOConstants.AH003)
-                || action.equals(ARHOConstants.AH002)
-                || action.equals(ARHOConstants.AH004)) {
-            return ARHOConstants.AH004;
+        if ((action.equals(VT1Constants.VT101) && isInbound) || ((action.equals(VT1Constants.VT111) && !isInbound))) {
+            return VT1Constants.VT101;
+        } else if (action.equals(VT1Constants.VT101)
+                || action.equals(VT1Constants.VT103)
+                || action.equals(VT1Constants.VT102)
+                || action.equals(VT1Constants.VT104)) {
+            return VT1Constants.VT104;
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
     public Dossier newDossier(OrchestraEbxmlMessage ebxmlMessage) {
         Dossier dossier = null;
         String action = ebxmlMessage.getAction();
-        if (action.equals(ARHOConstants.AH001)) {
+        if (action.equals(VT1Constants.VT101)) {
             dossier = new Dossier();
             Charger charger = new Charger();
             try {
@@ -140,8 +140,8 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
             return muleMessage;
         }
 
-        if (ebxml.getAction().equals(ARHOConstants.AH001)) {
-            this.processAH001(ebxml, params);
+        if (ebxml.getAction().equals(VT1Constants.VT101)) {
+            this.processVT101(ebxml, params);
         }
         return muleMessage;
     }
@@ -151,7 +151,7 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
         return null;
     }
 
-    private void processAH001(OrchestraEbxmlMessage ebxml, Map params) throws Exception {
+    private void processVT101(OrchestraEbxmlMessage ebxml, Map params) throws Exception {
         //org.guce.orchestra.entity.Process process = ServiceUtility.getProcessFacade().find(ebxml.getService());
         String fromPartyId = ((MessageHeader.PartyId) ebxml.getToPartyIds().next()).getId();
         String toPartyId = ((MessageHeader.PartyId) ebxml.getFromPartyIds().next()).getId();
@@ -165,11 +165,11 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
         String service = ebxml.getService();
         SIMULATION_COUNT = SIMULATION_COUNT + 1;
         int type = SIMULATION_COUNT % 3;
-        String action = ARHOConstants.AH004;
+        String action = VT1Constants.VT104;
         if (type == 2) {
-            action = ARHOConstants.AH002;
+            action = VT1Constants.VT102;
         } else if (type == 0) {
-            action = ARHOConstants.AH003;
+            action = VT1Constants.VT103;
         }
         OrchestraEbxmlMessage ebxmlResponse = new OrchestraEbxmlMessage(fromPartyId, toPartyId, conversationId, service, action);
 
@@ -217,14 +217,14 @@ public class ARHOProcessing extends AbstractProcessProcessing implements Process
             String direction, HashMap<String, Object> params) {
         Object id = null;
         if (direction.equals(Endpoint.OUTBOUND)) {
-            String partnerListProperty = "arho.partner.siat.list";
-            String groupListProperty = "arho.partner_group.siat.list";
-            String endpointProperty = "arho.endpoint.siat";
+            String partnerListProperty = "vt1.partner.siat.list";
+            String groupListProperty = "vt1.partner_group.siat.list";
+            String endpointProperty = "vt1.endpoint.siat";
             String epId = this.getEndpointFromParams(process, partner, partnerListProperty, groupListProperty, endpointProperty);
             if (StringUtils.isBlank(epId)) {
-                partnerListProperty = "arho.partner.web.list";
-                groupListProperty = "arho.partner_group.web.list";
-                endpointProperty = "arho.endpoint.web";
+                partnerListProperty = "vt1.partner.web.list";
+                groupListProperty = "vt1.partner_group.web.list";
+                endpointProperty = "vt1.endpoint.web";
                 epId = this.getEndpointFromParams(process, partner, partnerListProperty, groupListProperty, endpointProperty);
             }
             id = epId;

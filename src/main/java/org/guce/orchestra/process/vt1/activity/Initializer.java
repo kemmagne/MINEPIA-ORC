@@ -1,7 +1,7 @@
-package org.guce.orchestra.process.arho.activity;
+package org.guce.orchestra.process.vt1.activity;
 
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
-import org.guce.orchestra.process.arho.Request;
+import org.guce.orchestra.process.vt1.Request;
 
 public class Initializer{
 	

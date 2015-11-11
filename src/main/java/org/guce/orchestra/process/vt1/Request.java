@@ -1,4 +1,4 @@
-package org.guce.orchestra.process.arho;
+package org.guce.orchestra.process.vt1;
 
 import hk.hku.cecid.ebms.pkg.MessageHeader.PartyId;
 import java.io.Serializable;
@@ -20,11 +20,11 @@ public class Request extends AbstractRequest implements Serializable{
 	 */
 	private static final long serialVersionUID = 8351380533868067167L;
 
-	public static final String IN_MESSAGE_PREFIX = "arho.message.in.";
+	public static final String IN_MESSAGE_PREFIX = "vt1.message.in.";
 
-	public static final String INIT_MESSAGE = "arho.message.init";
+	public static final String INIT_MESSAGE = "vt1.message.init";
 	
-	public static final String OUT_MESSAGE_PREFIX = "arho.message.out.";
+	public static final String OUT_MESSAGE_PREFIX = "vt1.message.out.";
 	
 	public Request(OrchestraEbxmlMessage ebxmlMessage) {
 		super(ebxmlMessage);
@@ -41,7 +41,7 @@ public class Request extends AbstractRequest implements Serializable{
 		dossier.setProperty(INIT_MESSAGE, ebxmlMessage.getMessageId());
 //		Iterator it = ebxmlMessage.getToPartyIds();
 //		String interId = ((PartyId)it.next()).getId();
-//		dossier.setProperty("arho.partner.banque",interId);
+//		dossier.setProperty("vt1.partner.banque",interId);
 	}
 	
 	@Override
@@ -58,11 +58,11 @@ public class Request extends AbstractRequest implements Serializable{
 	}
 	
 	public String getDouanePartner(){
-		String id = getDossier().getProperty("arho.partner.douane");
+		String id = getDossier().getProperty("vt1.partner.douane");
 		return id;
 	}
         public String getRecieverPartner(){
-		String id = getDossier().getProperty("arho.partner.receiver");
+		String id = getDossier().getProperty("vt1.partner.receiver");
 		return id;
 	}
 	

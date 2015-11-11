@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.guce.orchestra.process</groupId>
-  <artifactId>guce-arho</artifactId>
-  <version>1.0.0</version>
+  <artifactId>guce-vt1</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>guce-arho</name>
+  <name>guce-vt1</name>
   <url>http://maven.apache.org</url>
 
   <properties>

@@ -1,12 +1,12 @@
 /**
  *
  */
-package org.guce.orchestra.process.arho.activity;
+package org.guce.orchestra.process.vt1.activity;
 
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
-import org.guce.orchestra.process.arho.ARHOConstants;
-import org.guce.orchestra.process.arho.Request;
-import org.guce.orchestra.process.arho.util.MessageActionValidator;
+import org.guce.orchestra.process.vt1.VT1Constants;
+import org.guce.orchestra.process.vt1.Request;
+import org.guce.orchestra.process.vt1.util.MessageActionValidator;
 
 /**
  * @author Koufana Crepin
@@ -23,7 +23,7 @@ public class CheckInitMessageAndGenerateResponse extends CustomActivity {
     }
 
     public Object execute(Request request, OrchestraEbxmlMessage ebxmlMessage) throws Exception {
-        MessageActionValidator.validates(ebxmlMessage, ARHOConstants.AH001, ARHOConstants.AH011);
+        MessageActionValidator.validates(ebxmlMessage, VT1Constants.VT101, VT1Constants.VT111);
         toPartyIds = new String[]{request.getRecieverPartner()};
         request.setInitMessageId(ebxmlMessage.getMessageId());
 

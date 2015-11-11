@@ -1,11 +1,11 @@
-package org.guce.orchestra.process.arho;
+package org.guce.orchestra.process.vt1;
 
-public class ARHOConstants {
+public class VT1Constants {
     
         /**
          * Code de la procedure
          */
-        public static final String PROCESS_CODE="arho";
+        public static final String PROCESS_CODE="vt1";
 
         /**
          * Dossier contenant les fichiers xsl pour la transformation des messages
@@ -20,21 +20,21 @@ public class ARHOConstants {
 	/**
 	 * Demande
 	 */
-	public static final String AH001 = "AH001";
+	public static final String VT101 = "VT101";
         /**
          * Reponse Complement d'information
          */
-	public static final String AH011 = "AH011";
+	public static final String VT111 = "VT111";
 	/**
 	 * Rejet demande
 	 */
-	public static final String AH003 = "AH003";
+	public static final String VT103 = "VT103";
 	/**
 	 * Complement d'information
 	 */
-	public static final String AH002 = "AH002";
+	public static final String VT102 = "VT102";
 	/**
 	 * Accord facture
 	 */
-	public static final String AH004 = "AH004";
+	public static final String VT104 = "VT104";
 }

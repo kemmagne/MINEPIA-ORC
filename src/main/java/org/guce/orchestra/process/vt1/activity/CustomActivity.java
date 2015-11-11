@@ -1,4 +1,4 @@
-package org.guce.orchestra.process.arho.activity;
+package org.guce.orchestra.process.vt1.activity;
 
 import hk.hku.cecid.ebms.pkg.PayloadContainer;
 import java.io.ByteArrayInputStream;
@@ -27,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
 import org.guce.orchestra.handler.OrchestraMessageClassifier;
 import org.guce.orchestra.io.ByteArrayDataSource;
-import org.guce.orchestra.process.arho.ARHOConstants;
+import org.guce.orchestra.process.vt1.VT1Constants;
 import org.guce.orchestra.util.OrchestraEbxmlFields;
 import org.guce.orchestra.util.OrchestraEbxmlUtility;
 import org.guce.orchestra.util.bpm.ValidatorUtil;
@@ -36,7 +36,7 @@ import org.w3c.dom.Document;
 public abstract class CustomActivity {
 
     public Object generateResponse(OrchestraEbxmlMessage ebxmlMessage) throws Exception {
-        URL url = getClass().getResource(ARHOConstants.SCHEMA_RESSOURCE_PATH + ebxmlMessage.getAction() + ".xsd");
+        URL url = getClass().getResource(VT1Constants.SCHEMA_RESSOURCE_PATH + ebxmlMessage.getAction() + ".xsd");
         String[] toPartyIds = toPartyIds();
         boolean transformBefore = shouldTransformBefore();
         OrchestraEbxmlMessage aperak = null;
@@ -68,6 +68,7 @@ public abstract class CustomActivity {
             fields.add(OrchestraEbxmlFields.ConversationId);
             fields.add(OrchestraEbxmlFields.MessageId);
             fields.add(OrchestraEbxmlFields.TimeStamp);
+            fields.add(OrchestraEbxmlFields.RefToMessageId);
             List<PayloadContainer> payloads = new ArrayList<PayloadContainer>();
             if (transformBefore) {
                 fields.add(OrchestraEbxmlFields.PayloadContainers);
@@ -117,8 +118,8 @@ public abstract class CustomActivity {
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputStream is = new ByteArrayInputStream(docByte);
         Document document = db.parse(is);
-        //InputStream xslIs = getClass().getResourceAsStream(ARHOConstants.XSL_RESSOURCE_PATH + ebxmlMessage.getAction() + ".xslt");
-        InputStream xslIs = getClass().getResourceAsStream(ARHOConstants.XSL_RESSOURCE_PATH + ARHOConstants.PROCESS_CODE+".xslt");
+        //InputStream xslIs = getClass().getResourceAsStream(VT1Constants.XSL_RESSOURCE_PATH + ebxmlMessage.getAction() + ".xslt");
+        InputStream xslIs = getClass().getResourceAsStream(VT1Constants.XSL_RESSOURCE_PATH + VT1Constants.PROCESS_CODE+".xslt");
         Transformer tr = TransformerFactory.newInstance().newTransformer(new StreamSource(xslIs));
         tr.setOutputProperty(OutputKeys.INDENT, "yes");
         tr.setOutputProperty(OutputKeys.METHOD, "xml");

@@ -1,19 +1,19 @@
 /**
  *
  */
-package org.guce.orchestra.process.arho.activity;
+package org.guce.orchestra.process.vt1.activity;
 
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
-import org.guce.orchestra.process.arho.ARHOConstants;
-import org.guce.orchestra.process.arho.Request;
-import org.guce.orchestra.process.arho.util.MessageActionValidator;
+import org.guce.orchestra.process.vt1.VT1Constants;
+import org.guce.orchestra.process.vt1.Request;
+import org.guce.orchestra.process.vt1.util.MessageActionValidator;
 import org.mule.util.StringUtils;
 
 /**
  * @author ayefou
  *
  */
-public class ProcessAH001Response extends CustomActivity {
+public class ProcessVT101Response extends CustomActivity {
 
     private String[] toPartyIds;
 
@@ -24,7 +24,7 @@ public class ProcessAH001Response extends CustomActivity {
      */
     private String actions;
 
-    public ProcessAH001Response() {
+    public ProcessVT101Response() {
 
     }
 
@@ -37,13 +37,13 @@ public class ProcessAH001Response extends CustomActivity {
                 MessageActionValidator.validates(ebxmlMessage, actionTabs);
             }
         }
-        if (ebxmlMessage.getAction().equals(ARHOConstants.AH003)) {
+        if (ebxmlMessage.getAction().equals(VT1Constants.VT103)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
-        } else if (ebxmlMessage.getAction().equals(ARHOConstants.AH002)) {
+        } else if (ebxmlMessage.getAction().equals(VT1Constants.VT102)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
-        } else if (ebxmlMessage.getAction().equals(ARHOConstants.AH004)) {
+        } else if (ebxmlMessage.getAction().equals(VT1Constants.VT104)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
-        } else if (ebxmlMessage.getAction().equals(ARHOConstants.AH011)) {
+        } else if (ebxmlMessage.getAction().equals(VT1Constants.VT111)) {
             this.transformBefore = true;
             toPartyIds = new String[]{request.getRecieverPartner()};
         }
