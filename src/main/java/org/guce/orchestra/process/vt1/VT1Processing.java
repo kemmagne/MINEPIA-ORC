@@ -141,7 +141,7 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
         }
 
         if (ebxml.getAction().equals(VT1Constants.VT101)) {
-            this.processVT101(ebxml, params);
+           // this.processVT101(ebxml, params);
         }
         return muleMessage;
     }

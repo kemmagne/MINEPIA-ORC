@@ -12,53 +12,56 @@ http://www.altova.com/mapforce
 	<xsl:output method="xml" encoding="UTF-8" indent="yes"/>
 	<xsl:template match="/">
 		<DOCUMENT>
-			<xsl:attribute name="xsi:noNamespaceSchemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">E:/koufana/GUCE/PROJETS/SIAT/LISTED~1/AP/VT_MINEPIA.xsd</xsl:attribute>
+			<xsl:attribute name="xsi:noNamespaceSchemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">E:/GUCE/Projet/SIAT/OrchestraProject/guce-vt1/src/main/resources/schemas/VT101.xsd</xsl:attribute>
 			<xsl:for-each select="DOCUMENT">
-				<xsl:variable name="var1_resultof_first" select="REFERENCE_DOSSIER"/>
-				<xsl:variable name="var2_resultof_first" select="MESSAGE"/>
+				<xsl:variable name="var1_resultof_first" select="MESSAGE"/>
+				<xsl:variable name="var2_resultof_first" select="REFERENCE_DOSSIER"/>
 				<xsl:variable name="var3_resultof_first" select="ROUTAGE"/>
 				<TYPE_DOCUMENT>
 					<xsl:value-of select="string(TYPE_DOCUMENT)"/>
 				</TYPE_DOCUMENT>
 				<MESSAGE>
 					<TYPE_MESSAGE>
-						<xsl:value-of select="string($var2_resultof_first/TYPE_MESSAGE)"/>
+						<xsl:value-of select="string($var1_resultof_first/TYPE_MESSAGE)"/>
 					</TYPE_MESSAGE>
 					<DATE_EMISSION>
-						<xsl:value-of select="string($var2_resultof_first/DATE_EMISSION)"/>
+						<xsl:value-of select="string($var1_resultof_first/DATE_EMISSION)"/>
 					</DATE_EMISSION>
 					<ETAT>
-						<xsl:value-of select="string($var2_resultof_first/ETAT)"/>
+						<xsl:value-of select="string($var1_resultof_first/ETAT)"/>
 					</ETAT>
 					<NUMERO_MESSAGE>
-						<xsl:value-of select="string($var2_resultof_first/NUMERO_MESSAGE)"/>
+						<xsl:value-of select="string($var1_resultof_first/NUMERO_MESSAGE)"/>
 					</NUMERO_MESSAGE>
 					<NUMERO_MESSAGE_ORIGINE>
-						<xsl:value-of select="string($var2_resultof_first/NUMERO_MESSAGE_ORIGINE)"/>
+						<xsl:value-of select="string($var1_resultof_first/NUMERO_MESSAGE_ORIGINE)"/>
 					</NUMERO_MESSAGE_ORIGINE>
 					<DATE_EMISSION_MSG_ORIGINE>
-						<xsl:value-of select="string($var2_resultof_first/DATE_EMISSION_MSG_ORIGINE)"/>
+						<xsl:value-of select="string($var1_resultof_first/DATE_EMISSION_MSG_ORIGINE)"/>
 					</DATE_EMISSION_MSG_ORIGINE>
 				</MESSAGE>
 				<REFERENCE_DOSSIER>
 					<NUMERO_DOSSIER>
-						<xsl:value-of select="string($var1_resultof_first/NUMERO_DOSSIER)"/>
+						<xsl:value-of select="string($var2_resultof_first/NUMERO_DOSSIER)"/>
 					</NUMERO_DOSSIER>
 					<NUMERO_DEMANDE>
-						<xsl:value-of select="string($var1_resultof_first/NUMERO_DEMANDE)"/>
+						<xsl:value-of select="string($var2_resultof_first/NUMERO_DEMANDE)"/>
 					</NUMERO_DEMANDE>
 					<SERVICE>
-						<xsl:value-of select="string($var1_resultof_first/SERVICE)"/>
+						<xsl:value-of select="string($var2_resultof_first/SERVICE)"/>
 					</SERVICE>
 					<REFERENCE_GUCE>
-						<xsl:value-of select="string($var1_resultof_first/REFERENCE_GUCE)"/>
+						<xsl:value-of select="string($var2_resultof_first/REFERENCE_GUCE)"/>
 					</REFERENCE_GUCE>
 					<REFERENCE_SIAT>
-						<xsl:value-of select="string($var1_resultof_first/REFERENCE_SIAT)"/>
+						<xsl:value-of select="string($var2_resultof_first/REFERENCE_SIAT)"/>
 					</REFERENCE_SIAT>
 					<DATE_CREATION>
-						<xsl:value-of select="string($var1_resultof_first/DATE_CREATION)"/>
+						<xsl:value-of select="string($var2_resultof_first/DATE_CREATION)"/>
 					</DATE_CREATION>
+					<SI>
+						<xsl:value-of select="string($var2_resultof_first/SI)"/>
+					</SI>
 				</REFERENCE_DOSSIER>
 				<ROUTAGE>
 					<EMETTEUR>
@@ -108,6 +111,11 @@ http://www.altova.com/mapforce
 								<OBSERVATION>
 									<xsl:value-of select="string(.)"/>
 								</OBSERVATION>
+							</xsl:for-each>
+							<xsl:for-each select="DATE_DECISION">
+								<DATE_DECISION>
+									<xsl:value-of select="string(.)"/>
+								</DATE_DECISION>
 							</xsl:for-each>
 						</DECISION_ORGANISME>
 					</xsl:for-each>
@@ -642,11 +650,6 @@ http://www.altova.com/mapforce
 							<xsl:value-of select="string(.)"/>
 						</COMMENTAIRE>
 					</xsl:for-each>
-					<xsl:for-each select="CONTENT/OBSERVATIONS">
-						<OBSERVATIONS>
-							<xsl:value-of select="string(.)"/>
-						</OBSERVATIONS>
-					</xsl:for-each>
 					<xsl:for-each select="CONTENT/MARCHANDISES">
 						<MARCHANDISES>
 							<xsl:for-each select="MARCHANDISE">
@@ -770,6 +773,60 @@ http://www.altova.com/mapforce
 								</MARCHANDISE>
 							</xsl:for-each>
 						</MARCHANDISES>
+					</xsl:for-each>
+					<xsl:for-each select="CONTENT/DECISION">
+						<DECISION>
+							<xsl:for-each select="DECISION_GENERALE">
+								<DECISION_GENERALE>
+									<xsl:value-of select="string(.)"/>
+								</DECISION_GENERALE>
+							</xsl:for-each>
+							<xsl:for-each select="SPECIFICATION_TECHNIQUE">
+								<SPECIFICATION_TECHNIQUE>
+									<xsl:value-of select="string(.)"/>
+								</SPECIFICATION_TECHNIQUE>
+							</xsl:for-each>
+							<xsl:for-each select="CONDITION">
+								<CONDITION>
+									<xsl:value-of select="string(.)"/>
+								</CONDITION>
+							</xsl:for-each>
+							<xsl:for-each select="CONSIGNE">
+								<CONSIGNE>
+									<xsl:value-of select="string(.)"/>
+								</CONSIGNE>
+							</xsl:for-each>
+							<xsl:for-each select="OBSERVATION_DECISION">
+								<OBSERVATION_DECISION>
+									<xsl:value-of select="string(.)"/>
+								</OBSERVATION_DECISION>
+							</xsl:for-each>
+							<xsl:for-each select="QUANTITE_ACCORDE">
+								<QUANTITE_ACCORDE>
+									<xsl:value-of select="string(.)"/>
+								</QUANTITE_ACCORDE>
+							</xsl:for-each>
+							<xsl:for-each select="DATE_VALIDITE">
+								<DATE_VALIDITE>
+									<xsl:value-of select="string(.)"/>
+								</DATE_VALIDITE>
+							</xsl:for-each>
+						</DECISION>
+					</xsl:for-each>
+					<xsl:for-each select="CONTENT/CAUSES">
+						<CAUSES>
+							<xsl:value-of select="string(.)"/>
+						</CAUSES>
+					</xsl:for-each>
+					<xsl:for-each select="CONTENT/NUMERO_VT_MINEPIA">
+						<NUMERO_VT_MINEPIA>
+							<xsl:value-of select="string(.)"/>
+						</NUMERO_VT_MINEPIA>
+					</xsl:for-each>
+					<xsl:for-each select="CONTENT/OBSERVATIONS">
+						<OBSERVATIONS>
+							<xsl:value-of select="string(.)"/>
+						</OBSERVATIONS>
 					</xsl:for-each>
 					<xsl:for-each select="CONTENT/PIECES_JOINTES">
 						<PIECES_JOINTES>

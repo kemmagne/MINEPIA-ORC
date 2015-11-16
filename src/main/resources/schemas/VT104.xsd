@@ -107,6 +107,13 @@
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
+							<xs:element name="SI">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="10"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -139,14 +146,14 @@
 										<xs:element name="CODE_ERREUR" minOccurs="0">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:maxLength value="5"/>
+													<xs:maxLength value="50"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
 										<xs:element name="LIBELLE_ERREUR" minOccurs="0">
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
-													<xs:maxLength value="50"/>
+													<xs:maxLength value="255"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
@@ -187,6 +194,13 @@
 											<xs:simpleType>
 												<xs:restriction base="xs:string">
 													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DATE_DECISION" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="50"/>
 												</xs:restriction>
 											</xs:simpleType>
 										</xs:element>
@@ -955,69 +969,6 @@
 									</xs:restriction>
 								</xs:simpleType>
 							</xs:element>
-							<xs:element name="OBSERVATIONS" minOccurs="0">
-								<xs:simpleType>
-									<xs:restriction base="xs:string">
-										<xs:maxLength value="255"/>
-									</xs:restriction>
-								</xs:simpleType>
-							</xs:element>
-							<xs:element name="DECISION" minOccurs="0">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="DECISION_GENERALE" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="255"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="SPECIFICATION_TECHNIQUE" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="255"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="CONDITION" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="255"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="CONSIGNE" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="255"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="OBSERVATION_DECISION" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="255"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="QUANTITE_ACCORDE" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:maxLength value="35"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-										<xs:element name="DATE_VALIDITE" minOccurs="0">
-											<xs:simpleType>
-												<xs:restriction base="xs:string">
-													<xs:length value="8"/>
-													<xs:pattern value="((20|19)[0-9][0-9])(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-												</xs:restriction>
-											</xs:simpleType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
 							<xs:element name="MARCHANDISES" minOccurs="0">
 								<xs:complexType>
 									<xs:sequence>
@@ -1187,6 +1138,83 @@
 										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
+							</xs:element>
+							<xs:element name="DECISION" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DECISION_GENERALE" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="SPECIFICATION_TECHNIQUE" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CONDITION" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="CONSIGNE" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="OBSERVATION_DECISION" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="255"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="QUANTITE_ACCORDE" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:maxLength value="35"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="DATE_VALIDITE" minOccurs="0">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:length value="8"/>
+													<xs:pattern value="((20|19)[0-9][0-9])(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CAUSES" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="255"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="NUMERO_VT_MINEPIA" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="50"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="OBSERVATIONS" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:maxLength value="255"/>
+									</xs:restriction>
+								</xs:simpleType>
 							</xs:element>
 							<xs:element name="PIECES_JOINTES" minOccurs="0">
 								<xs:complexType>
