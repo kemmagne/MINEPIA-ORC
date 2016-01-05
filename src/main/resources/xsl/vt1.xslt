@@ -770,6 +770,11 @@ http://www.altova.com/mapforce
 											</xsl:for-each>
 										</PAYS_ORIGINE>
 									</xsl:for-each>
+									<xsl:for-each select="INGREDIENT">
+										<INGREDIENT>
+											<xsl:value-of select="string(.)"/>
+										</INGREDIENT>
+									</xsl:for-each>
 								</MARCHANDISE>
 							</xsl:for-each>
 						</MARCHANDISES>

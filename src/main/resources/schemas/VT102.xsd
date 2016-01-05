@@ -1133,6 +1133,13 @@
 															</xs:sequence>
 														</xs:complexType>
 													</xs:element>
+													<xs:element name="INGREDIENT" minOccurs="0">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:maxLength value="100"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
 												</xs:sequence>
 											</xs:complexType>
 										</xs:element>
