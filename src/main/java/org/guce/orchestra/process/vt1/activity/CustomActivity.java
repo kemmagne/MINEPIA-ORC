@@ -23,11 +23,11 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.io.IOUtils;
-
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
 import org.guce.orchestra.handler.OrchestraMessageClassifier;
 import org.guce.orchestra.io.ByteArrayDataSource;
 import org.guce.orchestra.process.vt1.VT1Constants;
+import org.guce.orchestra.process.vt1.util.ClassicUtil;
 import org.guce.orchestra.util.OrchestraEbxmlFields;
 import org.guce.orchestra.util.OrchestraEbxmlUtility;
 import org.guce.orchestra.util.bpm.ValidatorUtil;
@@ -117,9 +117,8 @@ public abstract class CustomActivity {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputStream is = new ByteArrayInputStream(docByte);
-        Document document = db.parse(is);
-        //InputStream xslIs = getClass().getResourceAsStream(VT1Constants.XSL_RESSOURCE_PATH + ebxmlMessage.getAction() + ".xslt");
-        InputStream xslIs = getClass().getResourceAsStream(VT1Constants.XSL_RESSOURCE_PATH + VT1Constants.PROCESS_CODE+".xslt");
+        Document document = db.parse(is);        
+        InputStream xslIs = getClass().getResourceAsStream(VT1Constants.XSL_RESSOURCE_PATH +"vt1.xslt");
         Transformer tr = TransformerFactory.newInstance().newTransformer(new StreamSource(xslIs));
         tr.setOutputProperty(OutputKeys.INDENT, "yes");
         tr.setOutputProperty(OutputKeys.METHOD, "xml");

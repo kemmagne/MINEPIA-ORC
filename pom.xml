@@ -1,18 +1,36 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.guce.orchestra.process</groupId>
-    <artifactId>guce-vt1</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+  <groupId>org.guce.orchestra.process</groupId>
+  <artifactId>guce-vt1</artifactId>
+  <version>1.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
-    <name>guce-vt1</name>
-    <url>http://maven.apache.org</url>
+  <name>guce-vt1</name>
+  <url>http://maven.apache.org</url>
+  <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <conf_process_code_maj>ARHO</conf_process_code_maj><!--Code de la procédure en majuscule-->    
+    <conf_process_code_min>arho</conf_process_code_min><!--Code de la procédure en majuscule-->    
+    <conf_process_description>Autorisation d'importation des echantillons</conf_process_description><!--Code de la procédure en majuscule-->    
+    <conf_message_type_prefix>VT1</conf_message_type_prefix><!--Préfixe des action, ou code de messages-->    
+    <conf_include_payment>true</conf_include_payment><!--true pour inclure l'étape de paiement, false sinon -->    
+    <conf_include_notification>false</conf_include_notification><!--true pour notifier le parent de la facture et du reçue, false sinon-->    
+    <conf_bill_code>VT1601</conf_bill_code><!--Code du message de réception de la facture-->    
+    <conf_payment_code>VT1602</conf_payment_code><!--Code du message de réception de l'encaissement-->    
+  </properties>  
+
+
     <distributionManagement>
         <repository>
             <id>guce-repository</id>
@@ -25,23 +43,29 @@
             <url>https://srvdev.guce.local/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.guce.orchestra</groupId>
-            <artifactId>orchestra-core</artifactId>
-            <version>1.3.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.guce.orchestra.ext</groupId>
-            <artifactId>orchestra-ext-siat</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+     
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.guce.orchestra</groupId>
+      <artifactId>orchestra-core</artifactId>
+      <version>1.3.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.guce.orchestra.ext</groupId>
+      <artifactId>orchestra-ext-siat</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>guce-payment</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>

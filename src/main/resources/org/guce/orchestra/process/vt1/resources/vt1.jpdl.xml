@@ -1,96 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <process name="VT1" xmlns="http://jbpm.org/4.4/jpdl">
-   <start g="13,25,48,48" name="start1">
-      <transition to="Initialisation"/>
-   </start>
-   <java class="org.guce.orchestra.process.vt1.activity.Initializer" g="-14,86,92,52" method="init" name="Initialisation" var="request">
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="CheckInitMessageAndGenerateResponse"/>
-   </java>
-   <java class="org.guce.orchestra.process.vt1.activity.CheckInitMessageAndGenerateResponse" g="101,91,148,52" method="execute" name="CheckInitMessageAndGenerateResponse" var="initResponse">
-      <arg><object expr="#{request}"/></arg>
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="exclusive3"/>
-   </java>
+    <start g="13,25,48,48" name="start1">
+        <transition to="Initialisation"/>
+    </start>
+    <java class="org.guce.orchestra.process.vt1.activity.Initializer" g="-14,86,92,52" method="init" name="Initialisation" var="request">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </java>
+    <java class="org.guce.orchestra.process.vt1.activity.CheckInitMessageAndGenerateResponse" g="101,91,148,52" method="execute" name="CheckInitMessageAndGenerateResponse" var="initResponse">
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="exclusive3"/>
+    </java>
     <decision expr="#{initResponse.action}" g="266,35,48,48" name="exclusive3">
-      <transition to="sendVT101" name="VT101" g="-5,-20"/>
-      <transition to="sendVT101" name="VT111" g="-5,-20"/>
-      <transition to="sendInitAperak" name="APERAK_C" g="-5,-20"/>
-   </decision>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendVT101" >
-      <transition to="VT1.VT101.APERAK"/>
-   </mule-send>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendVT104" >
-      <transition to="VT1.VT104.APERAK"/>
-   </mule-send>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="244,140,92,52" expr="#{initResponse.messages}" name="sendInitAperak">
-      <transition to="VT1.VT102"/>
-   </mule-send>
-   <task g="108,200,133,52" name="VT1.VT102" assignee="#{request.importateurPartner}">
-      <transition to="CheckInitMessageAndGenerateResponse"/>
-   </task>
-   <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="VT1.VT101.APERAK">
-      <transition to="CheckAperakVT101"/>
-   </task>
-   <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakVT101" var="ackVT101">
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="sendAperakVT101"/>
-   </java>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackVT101}" name="sendAperakVT101">
-      <transition to="exclusive1"/>
-   </mule-send>
-   <decision g="362,224,48,48" name="exclusive1" expr="#{ackVT101.action}">
-      <transition to="VT1.VT102" name="APERAK_J" g="-5,-20"/>
-      <transition to="VT1.VT104" name="APERAK_D" g="-5,-20"/>
-      <transition to="VT1.VT101.APERAK" name="APERAK_C" g="-25,-18"/>
-   </decision>
-   <task g="517,127,136,52" name="VT1.VT104"  assignee="#{request.recieverPartner}">
-      <transition to="ProcessVT101Response"/>
-   </task>
-   <java g="651,188,138,52" name="ProcessVT101Response" class="org.guce.orchestra.process.vt1.activity.ProcessVT101Response" method="execute" var="rp001Response">
-      <field name="actions"><string value="VT103,VT102,VT104" /></field>
-      <arg><object expr="#{request}"/></arg>
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="sendVT101Response"/>
-   </java>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp001Response.messages}" name="sendVT101Response">
-      <transition to="exclusive2"/>
-   </mule-send>
-   <decision g="443,359,48,48" name="exclusive2" expr="#{rp001Response.action}">
-      <transition to="VT1.VT102.APERAK" name="VT102" g="-5,-20"/>
-      <transition to="VT1.VT104" name="APERAK_C" g="-5,-20"/>
-      <transition to="VT1.VT103.APERAK" name="VT103" g="-5,-20"/>
-      <transition to="VT1.VT104.APERAK" name="VT104" g="-5,-20"/>
-   </decision>
-   <task g="579,417,92,52" name="VT1.VT103.APERAK" assignee="#{request.importateurPartner}">
-      <transition to="ChekAperakVT103"/>
-   </task>
-   <java g="679,459,105,52" name="ChekAperakVT103" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT103">
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="sendAperakVT103"/>
-   </java>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackVT103}" name="sendAperakVT103">
-      <transition to="end1"/>
-   </mule-send>
-   <task g="272,309,92,52" name="VT1.VT102.APERAK" assignee="#{request.importateurPartner}">
-      <transition to="ChekAperakVT102"/>
-   </task>
-   <java g="64,329,139,52" name="ChekAperakVT102" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT102">
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="sendAperakVT102"/>
-   </java>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="-4,258,127,52" expr="#{ackVT102}" name="sendAperakVT102">
-      <transition to="VT1.VT102"/>
-   </mule-send>
-   <task g="311,388,92,52" name="VT1.VT104.APERAK" assignee="#{request.importateurPartner}">
-      <transition to="CheckAperakVT104"/>
-   </task>
-   <java g="182,464,124,52" name="CheckAperakVT104" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT104">
-      <arg><object expr="#{incoming}"/></arg>
-      <transition to="sendAperakVT104"/>
-   </java>
-   <mule-send endpoint="endpoint.orchestra.bpm.in" g="254,548,128,52" expr="#{ackVT104}" name="sendAperakVT104">
-      <transition to="end1"/>
-   </mule-send>
-   <end g="511,483,48,48" name="end1"/>
+        <transition to="sendVT101" name="VT101" g="-5,-20"/>
+        <transition to="sendVT101" name="VT111" g="-5,-20"/>
+        <transition to="sendInitAperak" name="APERAK_C" g="-5,-20"/>
+    </decision>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendVT101" >
+        <transition to="VT1.VT101.APERAK"/>
+    </mule-send>    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendVT104" >
+        <transition to="VT1.VT104.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="244,140,92,52" expr="#{initResponse.messages}" name="sendInitAperak">
+        <transition to="VT1.VT102"/>
+    </mule-send>
+    <task g="108,200,133,52" name="VT1.VT102" assignee="#{request.importateurPartner}">
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </task>
+    <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="VT1.VT101.APERAK">
+        <transition to="CheckAperakVT101"/>
+    </task>    
+    <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakVT101" var="ackVT101">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakVT101"/>
+    </java>    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackVT101}" name="sendAperakVT101">
+        <transition to="exclusive1"/>
+    </mule-send>   
+    <decision g="362,224,48,48" name="exclusive1" expr="#{ackVT101.action}">
+        <transition to="VT1.VT102" name="APERAK_J" g="-5,-20"/>        
+        <transition to="exclusive5" name="APERAK_D" g="-5,-20"/>
+        <transition to="VT1.VT101.APERAK" name="APERAK_C" g="-25,-18"/>
+    </decision>    
+    
+    <!--On vérrifie si il y' a une étape de paiement pour cette procédure-->
+    <decision g="362,224,48,48" name="exclusive5" expr="true">        
+        <transition to="VT1.VT104" name="false" g="-5,-20"/>
+        <transition to="exclusive8" name="true" g="-5,-20"/>        
+    </decision>
+    
+     <decision g="362,224,48,48" name="exclusive8" expr="#{request.recordPayed}">        
+        <transition to="VT1.VT104" name="true" g="-5,-20"/>
+        <transition to="VT1.VT1601" name="false" g="-5,-20"/>        
+    </decision>
+    
+    <task g="517,127,136,52" name="VT1.VT1601"  assignee="#{request.recieverPartner}">
+        <transition to="ProcessVT1601Response"/>
+    </task>
+    <java g="651,188,138,52" name="ProcessVT1601Response" class="org.guce.orchestra.process.vt1.activity.ProcessResponse" 
+          method="execute" var="rp601Response">
+        <field name="actions">
+            <string value="VT1601,VT103,VT102" />
+        </field>
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="exclusive4"/>
+    </java>    
+    <decision g="362,224,48,48" name="exclusive4" expr="#{rp601Response.action}">
+        <transition to="exclusive6" name="VT1601" g="-5,-20"/>   
+        <transition to="VT1.VT1601" name="APERAK_C" g="-25,-18"/>
+        <transition to="sendVT1.VT102" name="VT102" g="-5,-20"/>        
+        <transition to="sendVT1.VT103" name="VT103"/>
+    </decision>
+     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendVT1.VT102">
+        <transition to="VT1.VT102.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendVT1.VT103">
+        <transition to="VT1.VT103.APERAK"/>
+    </mule-send>
+    <decision g="362,224,48,48" name="exclusive6" expr="false">
+        <transition to="sendVT1.VT1601" name="true" g="-5,-20"/>   
+        <transition to="process_payment" name="false" g="-25,-18"/>
+    </decision>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{incoming}" name="sendVT1.VT1601">
+        <transition to="process_payment"/>
+    </mule-send>
+    
+    <sub-process name="process_payment"
+                 sub-process-key="PAYMENT">
+        <parameter-in subvar="incoming" expr="#{rp601Response.message}" />
+        <parameter-out var="payment" subvar="pay602Response" />
+        <transition to="ProcessResponseVT1602Receive" />
+    </sub-process>
+    <java g="651,188,138,52" name="ProcessResponseVT1602Receive" class="org.guce.orchestra.process.vt1.activity.ProcessResponse" method="updatePaymentState" var="rp602Payed">        
+        <arg>
+            <object expr="#{request}"/>
+        </arg>       
+        <transition to="exclusive7"/>
+    </java>
+    <decision g="362,224,48,48" name="exclusive7" expr="false">
+        <transition to="ProcessResponseVT1602" name="true" g="-5,-20"/>   
+        <transition to="VT1.VT104" name="false" g="-25,-18"/>
+    </decision>
+    <java g="651,188,138,52" name="ProcessResponseVT1602" class="org.guce.orchestra.process.vt1.activity.ProcessResponse" method="execute" var="rp602Response">        
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{payment}"/>
+        </arg>
+        <transition to="sendVT1.VT1602"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp602Response.messages}" name="sendVT1.VT1602">
+        <transition to="VT1.VT104"/>
+    </mule-send>
+    <task g="517,127,136,52" name="VT1.VT104"  assignee="#{request.recieverPartner}">
+        <transition to="ProcessResponse"/>
+    </task>
+    <java g="651,188,138,52" name="ProcessResponse" class="org.guce.orchestra.process.vt1.activity.ProcessResponse" method="execute" var="rp001Response">
+        <field name="actions">
+            <string value="VT103,VT102,VT104" />
+        </field>
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendVT101Response"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp001Response.messages}" name="sendVT101Response">
+        <transition to="exclusive2"/>
+    </mule-send>
+    <decision g="443,359,48,48" name="exclusive2" expr="#{rp001Response.action}">
+        <transition to="VT1.VT102.APERAK" name="VT102" g="-5,-20"/>
+        <transition to="VT1.VT104" name="APERAK_C" g="-5,-20"/>
+        <transition to="VT1.VT103.APERAK" name="VT103" g="-5,-20"/>
+        <transition to="VT1.VT104.APERAK" name="VT104" g="-5,-20"/>
+    </decision>
+    <task g="579,417,92,52" name="VT1.VT103.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="ChekAperakVT103"/>
+    </task>
+    <java g="679,459,105,52" name="ChekAperakVT103" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT103">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakVT103"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackVT103}" name="sendAperakVT103">
+        <transition to="end1"/>
+    </mule-send>
+    <task g="272,309,92,52" name="VT1.VT102.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="ChekAperakVT102"/>
+    </task>
+    <java g="64,329,139,52" name="ChekAperakVT102" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT102">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakVT102"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="-4,258,127,52" expr="#{ackVT102}" name="sendAperakVT102">
+        <transition to="VT1.VT102"/>
+    </mule-send>
+    <task g="311,388,92,52" name="VT1.VT104.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="CheckAperakVT104"/>
+    </task>
+    <java g="182,464,124,52" name="CheckAperakVT104" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackVT104">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakVT104"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="254,548,128,52" expr="#{ackVT104}" name="sendAperakVT104">
+        <transition to="end1"/>
+    </mule-send>
+    <end g="511,483,48,48" name="end1"/>
 </process>

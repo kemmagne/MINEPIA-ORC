@@ -1,15 +1,12 @@
 package org.guce.orchestra.process.vt1;
 
 import hk.hku.cecid.ebms.pkg.MessageHeader;
-
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
 import javax.activation.DataHandler;
 import javax.xml.parsers.DocumentBuilder;
@@ -18,7 +15,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.lang.StringUtils;
-
 import org.apache.log4j.Logger;
 import org.guce.orchestra.core.AbstractProcessProcessing;
 import org.guce.orchestra.core.ApplicationConfig;
@@ -26,7 +22,6 @@ import org.guce.orchestra.core.ApplicationManager;
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
 import org.guce.orchestra.core.ProcessAction;
 import org.guce.orchestra.core.ProcessProcessing;
-import org.guce.orchestra.core.ServiceUtility;
 import org.guce.orchestra.entity.Charger;
 import org.guce.orchestra.entity.Dossier;
 import org.guce.orchestra.entity.Endpoint;
@@ -36,13 +31,17 @@ import org.guce.orchestra.ext.siat.binding.DOCUMENT;
 import org.guce.orchestra.handler.OrchestraMessageClassifier;
 import org.guce.orchestra.handler.OrchestraSignalMessageGenerator;
 import org.guce.orchestra.io.ByteArrayDataSource;
+import static org.guce.orchestra.process.vt1.VT1Constants.*;
+import org.guce.orchestra.process.vt1.util.ClassicUtil;
+import org.guce.orchestra.process.payment.document.*;
+import org.guce.orchestra.process.payment.document.PaymentDocument.CONTENT.PAIEMENT.CHARGEUR;
 import org.guce.orchestra.util.JAXBUtil;
 import org.mule.api.MuleMessage;
 import org.w3c.dom.Document;
 
 public class VT1Processing extends AbstractProcessProcessing implements ProcessProcessing {
 
-    public static int SIMULATION_COUNT = 0;
+    public static int SIMULATION_COUNT = 0;    
 
     public VT1Processing() {
 
@@ -55,7 +54,7 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
     }
 
     @Override
-    public String processingType(OrchestraEbxmlMessage ebxml, boolean isInbound, Map params) {
+    public String processingType(OrchestraEbxmlMessage ebxml, boolean isInbound, Map params) {          
         String action = ebxml.getAction();
         if ((action.equals(VT1Constants.VT101) && isInbound) || ((action.equals(VT1Constants.VT111) && !isInbound))) {
             return VT1Constants.VT101;
@@ -141,7 +140,7 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
         }
 
         if (ebxml.getAction().equals(VT1Constants.VT101)) {
-           // this.processVT101(ebxml, params);
+//            this.processPay(ebxml, params);
         }
         return muleMessage;
     }
@@ -151,7 +150,104 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
         return null;
     }
 
-    private void processVT101(OrchestraEbxmlMessage ebxml, Map params) throws Exception {
+    private void processPay(OrchestraEbxmlMessage ebxml, Map params) throws Exception {
+        //org.guce.orchestra.entity.Process process = ServiceUtility.getProcessFacade().find(ebxml.getService());
+        String fromPartyId = ((MessageHeader.PartyId) ebxml.getToPartyIds().next()).getId();
+        String toPartyId = ((MessageHeader.PartyId) ebxml.getFromPartyIds().next()).getId();
+        /*/Properties prop = new Properties();
+         prop.load(new StringReader(process.getParams()));
+         String toPartyId = prop.getProperty("vtp.partner.signatory");*/
+        if (toPartyId.equals(fromPartyId)) {
+            return;
+        }
+        String conversationId = ebxml.getConversationId();
+        String service = ebxml.getService();
+        SIMULATION_COUNT = SIMULATION_COUNT + 1;
+        int type = SIMULATION_COUNT % 3;
+        String action = VT1Constants.VT1601;
+
+        OrchestraEbxmlMessage ebxmlResponse = new OrchestraEbxmlMessage(fromPartyId, toPartyId, conversationId, service, action);
+
+        PaymentDocument document = (PaymentDocument) JAXBUtil.unmarshall(ebxml.getMainContentByte(), PaymentDocument.class);
+        if (document.getROUTAGE() == null) {
+            document.setROUTAGE(new PaymentDocument.ROUTAGE());
+        }
+
+        document.getCONTENT().setPAIEMENT(new PaymentDocument.CONTENT.PAIEMENT());
+        PaymentDocument.CONTENT.PAIEMENT.BENEFICIAIRE benef = new PaymentDocument.CONTENT.PAIEMENT.BENEFICIAIRE();
+
+        benef.setCODE("MINEPIA");
+        benef.setLIBELLE("MINISTERE");
+        document.getCONTENT().getPAIEMENT().setBENEFICIAIRE(benef);
+        CHARGEUR chargeur = new PaymentDocument.CONTENT.PAIEMENT.CHARGEUR();
+        chargeur.setNUMEROCONTRIBUABLE("135");
+        chargeur.setRAISONSOCIALE("SOTRASCAM");
+        document.getCONTENT().getPAIEMENT().setCHARGEUR(chargeur);
+        PaymentDocument.CONTENT.PAIEMENT.PARTIEVERSANTE partie = new PaymentDocument.CONTENT.PAIEMENT.PARTIEVERSANTE();
+        partie.setNUMEROCONTRIBUABLE("123");
+        partie.setRAISONSOCIALE("Steve Anyam");
+        document.getCONTENT().getPAIEMENT().setPARTIEVERSANTE(partie);
+        PaymentDocument.CONTENT.PAIEMENT.FACTURE facture = new PaymentDocument.CONTENT.PAIEMENT.FACTURE();
+        PaymentDocument.CONTENT.PAIEMENT.FACTURE.DETAILFACTURES details = new PaymentDocument.CONTENT.PAIEMENT.FACTURE.DETAILFACTURES();
+        PaymentDocument.CONTENT.PAIEMENT.FACTURE.DETAILFACTURES.DETAILFACTURE detail = new PaymentDocument.CONTENT.PAIEMENT.FACTURE.DETAILFACTURES.DETAILFACTURE();
+        detail.setCODEARTICLE("NIPOT");
+        detail.setLIBELLEARTICLE("NITRATE DE POTASSIUM");
+        detail.setMONTANTHT("50000");
+        detail.setMONTANTTTC("55000");
+        detail.setMONTANTTVA("5000");
+        detail.setNUMEROLIGNE("1");
+        details.getDETAILFACTURE().add(detail);
+        facture.setDETAILFACTURES(details);
+        facture.setMONTANTHT("50000");
+        facture.setMONTANTTTC("55000");
+        facture.setMONTANTTVA("5000");
+        facture.setREFERENCEFACTURE("FACT0AES1");
+
+        document.getCONTENT().getPAIEMENT().setFACTURE(facture);
+        PaymentDocument.CONTENT.PAIEMENT.SIGNATAIRE sign = new PaymentDocument.CONTENT.PAIEMENT.SIGNATAIRE();
+        sign.setLIEU("DOUALA");
+        sign.setNOM("ABOLO");
+        sign.setQUALITE("SG");
+        sign.setSOCIETE("MINEPIA");
+        document.getCONTENT().getPAIEMENT().setSIGNATAIRE(sign);
+
+        document.setTYPEDOCUMENT(action);
+        document.getROUTAGE().setEMETTEUR(fromPartyId);
+        document.getROUTAGE().setDESTINATAIRE(toPartyId);
+        document.getREFERENCEDOSSIER().setREFERENCESIAT("SIAT" + document.getREFERENCEDOSSIER().getNUMERODOSSIER());
+        document.getREFERENCEDOSSIER().setREFERENCEGUCE(ebxml.getConversationId());
+        String contentId = UUID.randomUUID().toString();
+        DataHandler dataHandler = new DataHandler(new ByteArrayDataSource(JAXBUtil.marshall(document, true)));
+        ebxmlResponse.addPayloadContainer(dataHandler, contentId, null);
+
+        try {
+            ebxml.addAckRequested(false);
+        } catch (Exception e) {
+        }
+        OrchestraEbxmlMessage ack = OrchestraSignalMessageGenerator.generateAcknowledgmentAction(ebxml, OrchestraMessageClassifier.ACTION_APERAK_K);
+        File ackFile = new File(ApplicationManager.getInstance().getAppConfig().getIncommingMessageDirectory(), "APERAK_K." + System.currentTimeMillis() + "." + ebxml.getConversationId() + ".xml");
+        OutputStream ackOut = new FileOutputStream(ackFile);
+        ack.writeTo(ackOut);
+        ackOut.close();
+        try {
+            Thread.sleep(10 * 1000);
+        } catch (Exception e) {
+        }
+
+        File file = new File(ApplicationManager.getInstance().getAppConfig().getIncommingMessageDirectory(), action + "." + System.currentTimeMillis() + "." + ebxml.getConversationId() + ".xml");
+//        File file = new File(ApplicationManager.getInstance().getAppConfig().getUntransformedMessageDirectory(), action + "." + System.currentTimeMillis() + "." + ebxml.getConversationId() + ".xml");
+        OutputStream out = new FileOutputStream(file);
+        ebxmlResponse.writeTo(out);
+        out.close();
+        try {
+            Thread.sleep(10 * 1000);
+        } catch (Exception e) {
+
+        }
+
+    }
+
+    private void process001(OrchestraEbxmlMessage ebxml, Map params) throws Exception {
         //org.guce.orchestra.entity.Process process = ServiceUtility.getProcessFacade().find(ebxml.getService());
         String fromPartyId = ((MessageHeader.PartyId) ebxml.getToPartyIds().next()).getId();
         String toPartyId = ((MessageHeader.PartyId) ebxml.getFromPartyIds().next()).getId();
@@ -207,7 +303,7 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
         try {
             Thread.sleep(10 * 1000);
         } catch (Exception e) {
-            
+
         }
 
     }
@@ -218,11 +314,11 @@ public class VT1Processing extends AbstractProcessProcessing implements ProcessP
         Object id = null;
         if (direction.equals(Endpoint.OUTBOUND)) {
             String partnerListProperty = "vt1.partner.siat.list";
-            String groupListProperty = "vt1.partner_group.siat.list";
+            String groupListProperty ="vt1.partner_group.siat.list";
             String endpointProperty = "vt1.endpoint.siat";
             String epId = this.getEndpointFromParams(process, partner, partnerListProperty, groupListProperty, endpointProperty);
             if (StringUtils.isBlank(epId)) {
-                partnerListProperty = "vt1.partner.web.list";
+                partnerListProperty ="vt1.partner.web.list";
                 groupListProperty = "vt1.partner_group.web.list";
                 endpointProperty = "vt1.endpoint.web";
                 epId = this.getEndpointFromParams(process, partner, partnerListProperty, groupListProperty, endpointProperty);

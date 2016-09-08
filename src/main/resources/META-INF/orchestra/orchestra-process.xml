@@ -9,12 +9,12 @@
 				   xsi:schemaLocation="http://www.guichetunique.org/orchestra/schema/orchestra-process http://www.guichetunique.org/orchestra/schema/orchestra-process/1.1/process.xsd">
 	<process>
 		<id>vt1</id>
-		<name>Visa Tehnique MINEPIA</name>
+		<name>Visas technique MINEPIA</name>
 		<version>1.0.0</version>
 		<i18n-name>vt1.name</i18n-name>
 		<bpms>jbpm-4.4</bpms>
 		<process-name>VT1</process-name>
-		<description>Visa Tehnique MINEPIA</description>
+		<description>Visas technique MINEPIA</description>
 		<initializer-group>CAD</initializer-group>
 		<processing-class>org.guce.orchestra.process.vt1.VT1Processing</processing-class>
 		<configuration>
@@ -26,8 +26,8 @@
 	</process>
 	<partners>
 		<partner>
-			<id>MINADER</id>
-			<name>Ministère </name>
+			<id>MINEPIA</id>
+			<name>MINISTERE DE L'ELEVAGE DE LA PECHE ET DE L'INDUSTRIE ARTISANALE</name>
 		</partner>
 	</partners>
 	<groups>
@@ -83,66 +83,49 @@
 	<processing-types></processing-types>
 	<task-list>
 		<task>
-			<name>InitialisationFichePivo</name>
-			<i18n-name>vt1.task.InitialisationFichePivo</i18n-name>
-			<default-name>Initialisation fiche PIVO</default-name>
+			<name>VT1.VT102</name>
+			<i18n-name>VT1.VT102</i18n-name>
+			<default-name></default-name>
 		</task>
+        <task>
+			<name>VT1.VT101.APERAK</name>
+			<i18n-name>VT1.VT101.APERAK</i18n-name>
+			<default-name></default-name>
+		</task>
+        <task>
+			<name>VT1.VT1601</name>
+			<i18n-name>VT1.VT1601</i18n-name>
+			<default-name></default-name>
+		</task>
+        <task>
+			<name>VT1.VT104</name>
+			<i18n-name>VT1.VT104</i18n-name>
+			<default-name></default-name>
+		</task>
+        <task>
+			<name>VT1.VT103.APERAK</name>
+			<i18n-name>VT1.VT103.APERAK</i18n-name>
+			<default-name></default-name>
+		</task>
+        <task>
+			<name>VT1.VT102.APERAK</name>
+			<i18n-name>VT1.VT102.APERAK</i18n-name>
+			<default-name></default-name>
+		</task>
+        <task>
+			<name>VT1.VT104.APERAK</name>
+			<i18n-name>VT1.VT104.APERAK</i18n-name>
+			<default-name></default-name>
+		</task>        
 	</task-list>
 	<database-script>
 	</database-script>
 	<entities>
 	</entities>
-	<inbound-endpoints>
-		<!--<endpoint>
-			<id>vt1.endpoint.in.pop3.pad</id>
-			<name>Depot des demandes de facturation au PAD</name>
-			<scope>process</scope>
-			<type>SMTP</type>
-			<transformer-class>org.guce.orchestra.process.vt1.transformer.in.PADInboundTranformer</transformer-class>
-			<definition>
-				<pop3:inbound-endpoint 
-					connector-ref="connector.orchestra.pop3"
-					host="${vt1.in.pop3.pad.url}" password="${vt1.in.pop3.pad.password}" 
-					port="${endpoint.in.pop3.port}" user="${vt1.in.pop3.pad}" />
-			</definition>
-		</endpoint>
-		<endpoint>
-			<id>vt1.endpoint.in.ftp.pad</id>
-			<name>Endpoint pad de reception des facurations</name>
-			<scope>process</scope>
-			<type>FTP</type>
-			<transformer-class>org.guce.orchestra.process.vt1.transformer.in.PADInboundTranformer</transformer-class>
-			<definition>
-				<ftp:inbound-endpoint
-					binary="${vt1.input.ftp.pad.binary}" host="${vt1.input.ftp.pad.host}" connector-ref="vt1.connector.ftp.pad"
-					password="${vt1.input.ftp.pad.password}" user="${vt1.input.ftp.pad.user}" 
-					pollingFrequency="${vt1.input.ftp.pad.pollingFrequency}" 
-					port="${vt1.input.ftp.pad.port}" path="${vt1.input.ftp.pad.path}" 
-					passive="${vt1.input.ftp.pad.passive}" >
-					<file:filename-wildcard-filter pattern="*.xml,*.XML" />
-				</ftp:inbound-endpoint>
-			</definition>
-		</endpoint>-->
+	<inbound-endpoints>		
 	</inbound-endpoints>
-	<outbound-endpoints>
-		<!--<endpoint>
-			<id>vt1.endpoint.out.smtp.pad</id>
-			<name>Depot des demandes de facturation au PAD</name>
-			<scope>process</scope>
-			<type>SMTP</type>
-			<transformer-class>org.guce.orchestra.process.vt1.transformer.out.PADOutboundTransformer</transformer-class>
-			<definition>
-				<smtp:outbound-endpoint 
-					from="${endpoint.out.smtp.from}" host="${vt1.out.smtp.pad.url}" 
-					user="${endpoint.out.smtp.user}" password="${endpoint.out.smtp.password}"
-					port="${endpoint.out.smtp.port}" to="${vt1.out.smtp.pad}"
-					subject="#[header:OUTBOUND:vt1.file.name]"
-					transformer-refs="exitTransformer" />
-			</definition>
-		</endpoint>-->
-		
+	<outbound-endpoints>				
 	</outbound-endpoints>
-	<partner-endpoint-mapping>
-		
+	<partner-endpoint-mapping>		
 	</partner-endpoint-mapping>
 </orchestra-process>

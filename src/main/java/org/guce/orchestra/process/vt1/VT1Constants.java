@@ -1,8 +1,8 @@
 package org.guce.orchestra.process.vt1;
 
 public class VT1Constants {
-    
-        /**
+
+     /**
          * Code de la procedure
          */
         public static final String PROCESS_CODE="vt1";
@@ -10,12 +10,12 @@ public class VT1Constants {
         /**
          * Dossier contenant les fichiers xsl pour la transformation des messages
          */
-	public static final String XSL_RESSOURCE_PATH = "/xsl/";
+	public static final String XSL_RESSOURCE_PATH = "/org/guce/orchestra/process/vt1/xsl/";
         /**
          * Dossier contenant les xsd pour la validation des messages
          */
 	
-	public static final String SCHEMA_RESSOURCE_PATH = "/schemas/";
+	public static final String SCHEMA_RESSOURCE_PATH = "/org/guce/orchestra/process/vt1/schemas/";
 
 	/**
 	 * Demande
@@ -37,4 +37,9 @@ public class VT1Constants {
 	 * Accord facture
 	 */
 	public static final String VT104 = "VT104";
+    
+	public static final String VT1601 = "VT1601";
+    
+	public static final String VT1602 = "VT1602";
+    
 }
