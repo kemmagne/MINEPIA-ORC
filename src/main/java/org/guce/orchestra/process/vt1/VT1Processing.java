@@ -31,8 +31,6 @@ import org.guce.orchestra.ext.siat.binding.DOCUMENT;
 import org.guce.orchestra.handler.OrchestraMessageClassifier;
 import org.guce.orchestra.handler.OrchestraSignalMessageGenerator;
 import org.guce.orchestra.io.ByteArrayDataSource;
-import static org.guce.orchestra.process.vt1.VT1Constants.*;
-import org.guce.orchestra.process.vt1.util.ClassicUtil;
 import org.guce.orchestra.process.payment.document.*;
 import org.guce.orchestra.process.payment.document.PaymentDocument.CONTENT.PAIEMENT.CHARGEUR;
 import org.guce.orchestra.util.JAXBUtil;

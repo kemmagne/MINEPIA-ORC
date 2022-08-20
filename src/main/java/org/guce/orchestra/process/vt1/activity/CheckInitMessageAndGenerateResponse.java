@@ -6,7 +6,6 @@ package org.guce.orchestra.process.vt1.activity;
 import org.guce.orchestra.core.OrchestraEbxmlMessage;
 import org.guce.orchestra.process.vt1.VT1Constants;
 import org.guce.orchestra.process.vt1.Request;
-import org.guce.orchestra.process.vt1.util.ClassicUtil;
 import org.guce.orchestra.process.vt1.util.MessageActionValidator;
 
 /**

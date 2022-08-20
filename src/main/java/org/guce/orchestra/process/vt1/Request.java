@@ -7,7 +7,6 @@ import org.guce.orchestra.core.OrchestraEbxmlMessage;
 import org.guce.orchestra.core.ServiceUtility;
 import org.guce.orchestra.entity.Dossier;
 import org.guce.orchestra.entity.Process;
-import org.guce.orchestra.process.vt1.util.ClassicUtil;
 import org.guce.orchestra.util.bpm.AbstractRequest;
 
 public class Request extends AbstractRequest implements Serializable {
@@ -25,6 +24,8 @@ public class Request extends AbstractRequest implements Serializable {
 
     public static final String RECORD_PAYED = "vt1.recordPayed";
 
+    public static final String AUTO_INVOICED = "vt1.auto.invoiced";
+
     public Request(OrchestraEbxmlMessage ebxmlMessage) {
         super(ebxmlMessage);
     }
@@ -33,12 +34,12 @@ public class Request extends AbstractRequest implements Serializable {
     protected void init(OrchestraEbxmlMessage ebxmlMessage, Map<String, ? extends Object> params) {
         Dossier dossier = ebxmlMessage.getDossier();
         String processId = ebxmlMessage.getService();
-        //ProcessConfigurationUtil pcl = ProcessConfigurationUtil.getInstance(processId );
         Process process = ServiceUtility.getProcessFacade().find(processId);
         dossier.setProperties(process.getParams());
         dossier.setProperty(IN_MESSAGE_PREFIX + ebxmlMessage.getAction(), ebxmlMessage.getMessageId());
         dossier.setProperty(INIT_MESSAGE, ebxmlMessage.getMessageId());
         dossier.setProperty(RECORD_PAYED, "false");
+        dossier.setProperty(AUTO_INVOICED, "true");
     }
 
     @Override
@@ -66,6 +67,11 @@ public class Request extends AbstractRequest implements Serializable {
 
     public String getRecordPayed() {
         String id = getDossier().getProperty(RECORD_PAYED);
+        return id;
+    }
+
+    public String getAutoInvoiced() {
+        String id = getDossier().getProperty(AUTO_INVOICED);
         return id;
     }
 

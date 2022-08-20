@@ -11,8 +11,6 @@ import org.guce.orchestra.dao.util.Generator;
 import org.guce.orchestra.entity.Dossier;
 import org.guce.orchestra.process.vt1.VT1Constants;
 import org.guce.orchestra.process.vt1.Request;
-import org.guce.orchestra.process.vt1.util.ClassicUtil;
-import java.util.Map;
 import org.guce.orchestra.process.vt1.util.MessageActionValidator;
 import org.guce.orchestra.util.OrchestraEbxmlFields;
 import org.guce.orchestra.util.OrchestraEbxmlUtility;
