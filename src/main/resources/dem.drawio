@@ -1,0 +1,97 @@
+<mxfile host="Electron" modified="2023-12-04T10:17:33.419Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="vrJ6gGYn-reilK-wGVaJ" compressed="false" version="21.7.5" type="device">
+  <diagram id="dzslenoz5EgcA-fO8ZGD" name="Page-1">
+    <mxGraphModel dx="1104" dy="508" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <object label="org.guce.process.dem" element="package" placeholders="1" id="Sb3ObpHVFGHvWsoK8jhT-4">
+          <mxCell style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;container=1;fillColor=#fff2cc;labelPosition=center;verticalLabelPosition=middle;align=center;verticalAlign=middle;spacingLeft=0;fontSize=11;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;strokeColor=#d6b656;" parent="1" vertex="1">
+            <mxGeometry x="350" y="990" width="736" height="540" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="CoreRecord" element="existingClass" description="" entity="org.guce.core.entities.CoreRecord" xml="" id="Sb3ObpHVFGHvWsoK8jhT-13">
+          <mxCell style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#f0a30a;strokeColor=#BD7000;container=1;snapToPoint=1;fixDash=1;dropTarget=1;expand=1;treeMoving=1;fontSize=11;fontColor=#000000;" parent="Sb3ObpHVFGHvWsoK8jhT-4" vertex="1">
+            <mxGeometry x="20" y="32.480292683068576" width="110" height="36.175929750547446" as="geometry">
+              <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <mxCell id="Sb3ObpHVFGHvWsoK8jhT-14" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-13" vertex="1">
+          <mxGeometry y="26" width="110" height="9.194591495832166" as="geometry" />
+        </mxCell>
+        <object label="Extends" element="extends" id="Sb3ObpHVFGHvWsoK8jhT-15">
+          <mxCell style="endArrow=block;endSize=16;endFill=0;html=1;sourcePerimeterSpacing=-4;strokeWidth=1;fontSize=11;align=center;snapToPoint=1;fixDash=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" parent="Sb3ObpHVFGHvWsoK8jhT-4" source="Sb3ObpHVFGHvWsoK8jhT-5" target="Sb3ObpHVFGHvWsoK8jhT-13" edge="1">
+            <mxGeometry width="160" relative="1" as="geometry">
+              <mxPoint x="125.73333333333335" y="183.89182991664333" as="sourcePoint" />
+              <mxPoint x="289.28888888888895" y="183.89182991664333" as="targetPoint" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="DEMRegistration" element="class" table_name="DEM_MIN_REG" package_name="" xml_element="CONTENT" json_element="" description="Declaration d&#39;existence MINCOMMERCE" code="DEM" has_containers="false" columns="typeDeDeclaration:declarations.declaration," referenceField="demReference" afterFields="demDate,demReference" author="NGC" process_description="Declaration d&#39;existence MINCOMMERCE" attachments_types="IM:IMMATRICULATION ,EN:ENGARGEMENT,AT:ATTESTATION,AU:AUTRE " charger_xml_name="CLIENT" requestCode="01" responseCICode="11" ciCode="02" validationCode="04" modicationRequestCode="09" modificationCode="10" rejectCode="03" invoice.activity="false" partner.code="MINCOMMERCE" process_descriptionEn="Declaration d&#39;existence MINCOMMERCE" goods.type="CT" payment.activity="true" id="Sb3ObpHVFGHvWsoK8jhT-5">
+          <mxCell style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=2;fillColor=#0050ef;strokeColor=#001DBC;container=1;snapToPoint=1;fixDash=1;dropTarget=1;expand=1;treeMoving=1;fontSize=11;perimeterSpacing=0;swimlaneLine=1;sketch=0;fontColor=#ffffff;" parent="Sb3ObpHVFGHvWsoK8jhT-4" vertex="1">
+            <mxGeometry x="180" y="350.00421661855967" width="138.42" height="169.92260016734218" as="geometry">
+              <mxRectangle x="65.99555555555555" y="230.0046153846154" width="160" height="26" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="officeCode" type="string" element="field" label_name="Bureau" column_name="OFFICE_CODE" max_size="35" min_size="" options="BC-SNP:Yaoundé" optionsClass="" nullable="" unique="" xml_element="CODE_BUREAU" sequence="1" label_nameEn="Office" id="ivO6Cd6i5g06agd0l_ds-3">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;shadow=0;sketch=0;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
+            <mxGeometry y="26" width="138.42" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="demReference" type="string" element="field" label_name="N° de declaration d&#39;existence" column_name="REFERENCE_DEM" max_size="35" min_size="" options="" optionsClass="" nullable="" unique="" xml_element="NUMERO_DEM_MINCOMMERCE" sequence="2" label_nameEn="Declaration of existence number" id="SyuQHoE2tsR2rqhEWGtb-2">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;shadow=0;sketch=0;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
+            <mxGeometry y="52" width="138.42" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <object label="demDate" type="date" element="field" label_name="Date Declaration d&#39;exitence" column_name="DEM_DATE" max_size="" min_size="" options="" optionsClass="" nullable="" unique="" xml_element="DATE_DEM_MINEPDED" sequence="3" label_nameEn="Declaration of existence Date" id="H-aZSpLhL-oLSM1OxbNI-11">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;shadow=0;sketch=0;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
+            <mxGeometry y="78" width="138.42" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="Sb3ObpHVFGHvWsoK8jhT-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
+          <mxGeometry y="104" width="138.42" height="39.922600167342175" as="geometry" />
+        </mxCell>
+        <object label="declarations" join_table="" join_column="" inverse_join_column="" mapped_by="" unique="" cascade="" inverse_name="" element="relation" fetch_type="" orphan_removal="" xml_element="DECLARATION" sequence="6" label_name="Type de declaration" label_nameEn="Type of declaration" id="KvWwAyJbcnlXMrYyn6Tw-4">
+          <mxCell style="endArrow=classic;shadow=0;strokeWidth=1;rounded=0;endFill=1;elbow=vertical;endSize=10;startSize=10;sourcePerimeterSpacing=0;startArrow=oval;startFill=1;align=center;snapToPoint=1;targetPerimeterSpacing=0;fontSize=11;spacingRight=0;spacingBottom=2;spacing=0;fixDash=1;" parent="Sb3ObpHVFGHvWsoK8jhT-4" source="Sb3ObpHVFGHvWsoK8jhT-5" target="KvWwAyJbcnlXMrYyn6Tw-1" edge="1">
+            <mxGeometry x="-0.0123" relative="1" as="geometry">
+              <mxPoint x="600" y="168" as="sourcePoint" />
+              <mxPoint x="218" y="430" as="targetPoint" />
+              <mxPoint as="offset" />
+              <Array as="points" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="n" element="card" id="KvWwAyJbcnlXMrYyn6Tw-5">
+          <mxCell style="resizable=0;align=left;verticalAlign=bottom;labelBackgroundColor=none;fontSize=11;fontStyle=1;spacing=4;" parent="KvWwAyJbcnlXMrYyn6Tw-4" connectable="0" vertex="1">
+            <mxGeometry x="-1" relative="1" as="geometry">
+              <mxPoint x="11" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="n" element="card" id="KvWwAyJbcnlXMrYyn6Tw-6">
+          <mxCell style="resizable=0;align=right;verticalAlign=bottom;labelBackgroundColor=none;fontSize=11;fontStyle=1;spacing=4;" parent="KvWwAyJbcnlXMrYyn6Tw-4" connectable="0" vertex="1">
+            <mxGeometry x="1" relative="1" as="geometry">
+              <mxPoint x="14" y="23" as="offset" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="DEMDeclaration" element="class" table_name="DEM_TYPE" package_name="" xml_element="DECLARATION" json_element="" description="Gestion des domaines" code="DEM_TYPE" columns="declaration:declaration" tilte="" titleEn="Type of declaration of existence" process_description="Type de declaration d&#39;existence" process_descriptioneN="Type of declaration of existence" searchs="declaration:declaration" name_field="declaration" title="Type de declaration d&#39;existence" exportables="declaration:declaration" list_title="Liste des declaration d&#39;existance" id="KvWwAyJbcnlXMrYyn6Tw-1">
+          <mxCell style="swimlane;fontStyle=3;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;fillColor=#f8cecc;strokeColor=#b85450;container=1;snapToPoint=1;fixDash=1;dropTarget=1;expand=1;treeMoving=1;fontSize=14;" parent="Sb3ObpHVFGHvWsoK8jhT-4" vertex="1">
+            <mxGeometry x="440" y="228.52" width="121.34" height="82.96" as="geometry">
+              <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
+            </mxGeometry>
+          </mxCell>
+        </object>
+        <object label="declaration" type="string" element="field" label_name="Type de declaration" column_name="" max_size="" min_size="" options="" optionsClass="" nullable="" unique="" label_nameEn="Type of declaration" xml_element="DEM_DECLARATION" id="KvWwAyJbcnlXMrYyn6Tw-2">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;" parent="KvWwAyJbcnlXMrYyn6Tw-1" vertex="1">
+            <mxGeometry y="26" width="121.34" height="26" as="geometry" />
+          </mxCell>
+        </object>
+        <mxCell id="KvWwAyJbcnlXMrYyn6Tw-3" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="KvWwAyJbcnlXMrYyn6Tw-1" vertex="1">
+          <mxGeometry y="52" width="121.34" height="8.32876712328767" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

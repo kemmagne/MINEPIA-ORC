@@ -1,131 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<orchestra-process xmlns="http://www.guichetunique.org/orchestra/schema/orchestra-process" 
-				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-				   xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp"
-				   xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" 
-				   xmlns:http="http://www.mulesoft.org/schema/mule/http"
-				   xmlns:file="http://www.mulesoft.org/schema/mule/file"
-				   xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3"
-				   xsi:schemaLocation="http://www.guichetunique.org/orchestra/schema/orchestra-process http://www.guichetunique.org/orchestra/schema/orchestra-process/1.1/process.xsd">
-	<process>
-		<id>vt1</id>
-		<name>Visas technique MINEPIA</name>
-		<version>1.0.0</version>
-		<i18n-name>vt1.name</i18n-name>
-		<bpms>jbpm-4.4</bpms>
-		<process-name>VT1</process-name>
-		<description>Visas technique MINEPIA</description>
-		<initializer-group>CAD</initializer-group>
-		<processing-class>org.guce.orchestra.process.vt1.VT1Processing</processing-class>
-		<configuration>
-			<flow-config-properties-file>org/guce/orchestra/process/vt1/resources/vt1.properties</flow-config-properties-file>
-			<i18n-path>org/guce/orchestra/process/vt1/i18n</i18n-path>
-			<params-file>org/guce/orchestra/process/vt1/resources/params.properties</params-file>
-		</configuration>
-		<process-definition-file>org/guce/orchestra/process/vt1/resources/vt1.jpdl.xml</process-definition-file>
-	</process>
-	<partners>
-		<partner>
-			<id>MINEPIA</id>
-			<name>MINISTERE DE L'ELEVAGE DE LA PECHE ET DE L'INDUSTRIE ARTISANALE</name>
-		</partner>
-	</partners>
-	<groups>
-		<group>
-			<id>DOUANE</id>
-			<name>DOUANE</name>
-		</group>
-		<group>
-			<id>IMPORTATEUR</id>
-			<name>IMPORTATEUR</name>
-		</group>
-		<group>
-			<id>CAD</id>
-			<name>Comissionaire agrée en douane</name>
-		</group>
-	</groups>
-	<partner-group-mapping>
-		<partner-group>
-			<partner-id>DOUANE1</partner-id>
-			<group-id>DOUANE</group-id>
-		</partner-group>
-	</partner-group-mapping>
-	<process-roles>
-		<role>
-			<role-name>PROCESS_INITIALIZER</role-name>
-			<group-id>CAD</group-id>
-		</role>
-	</process-roles>
-	<transformers>
-	</transformers>
-	<message-types>
-		<message-type>
-			<type>VT101</type>
-			<i18n-name>vt1.message.VT101</i18n-name>
-			<default-name>VT101</default-name>
-		</message-type>
-		<message-type>
-			<type>VT102</type>
-			<i18n-name>vt1.message.VT102</i18n-name>
-			<default-name>VT102</default-name>
-		</message-type>
-		<message-type>
-			<type>VT103</type>
-			<i18n-name>vt1.message.VT103</i18n-name>
-			<default-name>VT103</default-name>
-		</message-type>
-		<message-type>
-			<type>VT104</type>
-			<i18n-name>vt1.message.VT104</i18n-name>
-			<default-name>VT104</default-name>
-		</message-type>
-	</message-types>
-	<processing-types></processing-types>
-	<task-list>
-		<task>
-			<name>VT1.VT102</name>
-			<i18n-name>VT1.VT102</i18n-name>
-			<default-name></default-name>
-		</task>
+<orchestra-process xmlns="http://www.guichetunique.org/orchestra/schema/orchestra-process"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp"
+                   xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp"
+                   xmlns:http="http://www.mulesoft.org/schema/mule/http"
+                   xmlns:file="http://www.mulesoft.org/schema/mule/file"
+                   xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3"
+                   xsi:schemaLocation="http://www.guichetunique.org/orchestra/schema/orchestra-process http://www.guichetunique.org/orchestra/schema/orchestra-process/1.1/process.xsd">
+    <process>
+        <id>dem</id>
+        <name>Declaration d'existence MINCOMMERCE</name>
+        <version>${version}</version>
+        <i18n-name>dem.name</i18n-name>
+        <bpms>jbpm-4.4</bpms>
+        <process-name>DEM</process-name>
+        <description>Declaration d'existence MINCOMMERCE</description>
+        <initializer-group>CAD</initializer-group>
+        <processing-class>org.guce.orchestra.process.dem.DEMProcessing</processing-class>
+        <configuration>
+            <flow-config-properties-file>org/guce/orchestra/process/dem/resources/dem.properties</flow-config-properties-file>
+            <i18n-path>org/guce/orchestra/process/dem/i18n</i18n-path>
+            <params-file>org/guce/orchestra/process/dem/resources/params.properties</params-file>
+        </configuration>
+        <process-definition-file>org/guce/orchestra/process/dem/resources/dem.jpdl.xml</process-definition-file>
+    </process>
+    <partners>
+        <partner>
+            <id>MINCOMMERCE</id>
+            <name>MINCOMMERCE</name>
+        </partner>
+    </partners>
+    <groups>
+    </groups>
+    <partner-group-mapping>
+    </partner-group-mapping>
+    <process-roles>
+        <role>
+            <role-name>PROCESS_INITIALIZER</role-name>
+            <group-id>CAD</group-id>
+        </role>
+        <role>
+            <role-name>PROCESS_INITIALIZER</role-name>
+            <group-id>IMPORTATEUR</group-id>
+        </role>
+        <role>
+            <role-name>PROCESS_INITIALIZER</role-name>
+            <group-id>EXPORTATEUR</group-id>
+        </role>
+    </process-roles>
+    <transformers>
+    </transformers>
+    <message-types>
+        <message-type>
+            <type>DEM01</type>
+            <i18n-name>dem.message.DEM01</i18n-name>
+            <default-name>Demande de Declaration d'existence MINCOMMERCE</default-name>
+            <category>INIT</category>
+        </message-type>
+        <message-type>
+            <type>DEM09</type>
+            <i18n-name>dem.message.DEM09</i18n-name>
+            <default-name>Demande de modification du Declaration d'existence MINCOMMERCE</default-name>
+            <category>INIT</category>
+        </message-type>
+        <message-type>
+            <type>DEM02</type>
+            <i18n-name>dem.message.DEM02</i18n-name>
+            <default-name>Demande Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <category>CI_REQUEST</category>
+        </message-type>
+        <message-type>
+            <type>DEM03</type>
+            <i18n-name>dem.message.DEM03</i18n-name>
+            <default-name>Rejet Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <category>REJECTION</category>
+        </message-type>
+        <message-type>
+            <type>DEM04</type>
+            <i18n-name>dem.message.DEM04</i18n-name>
+            <default-name>Accord du Declaration d'existence MINCOMMERCE</default-name>
+            <category>SIGNATURE</category>
+        </message-type>
+        <message-type>
+            <type>DEM10</type>
+            <i18n-name>dem.message.DEM10</i18n-name>
+            <default-name>Accord du Declaration d'existence MINCOMMERCE modifié</default-name>
+            <category>SIGNATURE</category>
+        </message-type>
+        <message-type>
+            <type>DEM11</type>
+            <i18n-name>dem.message.DEM11</i18n-name>
+            <default-name>Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <category>INIT</category>
+        </message-type>
+        <message-type>
+            <type>DEM601</type>
+            <i18n-name>dem.message.DEM601</i18n-name>
+            <default-name>Facturation des frais du DEM</default-name>
+            <category>SIGNATURE</category>
+        </message-type>
+        <message-type>
+            <type>DEM602</type>
+            <i18n-name>dem.message.DEM602</i18n-name>
+            <default-name>Paiement des frais du DEM</default-name>
+            <category>SIGNATURE</category>
+        </message-type>
+    </message-types>
+    <processing-types></processing-types>
+    <task-list>
         <task>
-			<name>VT1.VT101.APERAK</name>
-			<i18n-name>VT1.VT101.APERAK</i18n-name>
-			<default-name></default-name>
-		</task>
+            <name>DEM.DEM01</name>
+            <i18n-name>dem.task.DEM.DEM01</i18n-name>
+            <default-name>Demande du Declaration d'existence MINCOMMERCE</default-name>
+        </task>
         <task>
-			<name>VT1.VT1601</name>
-			<i18n-name>VT1.VT1601</i18n-name>
-			<default-name></default-name>
-		</task>
+            <name>DEM.DEM02</name>
+            <i18n-name>dem.task.DEM.DEM02</i18n-name>
+            <default-name>Complément d'informations du Declaration d'existence MINCOMMERCE</default-name>
+            <category>CI</category>
+        </task>
         <task>
-			<name>VT1.VT104</name>
-			<i18n-name>VT1.VT104</i18n-name>
-			<default-name></default-name>
-		</task>
+            <name>DEM.DEM01.APERAK</name>
+            <i18n-name>dem.task.DEM.DEM01.APERAK</i18n-name>
+            <default-name>Réception Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <category>APERAK</category>
+        </task>
         <task>
-			<name>VT1.VT103.APERAK</name>
-			<i18n-name>VT1.VT103.APERAK</i18n-name>
-			<default-name></default-name>
-		</task>
+            <name>DEM.DEM09.APERAK</name>
+            <i18n-name>dem.task.DEM.DEM09.APERAK</i18n-name>
+            <default-name>Réception Demande de modification du Declaration d'existence MINCOMMERCE</default-name>
+            <category>APERAK</category>
+        </task>
+         <task>
+            <name>DEM.DEM601</name>
+            <i18n-name>dem.task.DEM.DEM601</i18n-name>
+            <default-name>dem.task.DEM.DEM601</default-name>
+            <category>PAYMENT</category>
+            <assignee-role>CAD</assignee-role>
+        </task>
         <task>
-			<name>VT1.VT102.APERAK</name>
-			<i18n-name>VT1.VT102.APERAK</i18n-name>
-			<default-name></default-name>
-		</task>
+            <name>DEM.DEM04</name>
+            <i18n-name>dem.task.DEM.DEM04</i18n-name>
+            <default-name>Traitement Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <category>SIGNATURE</category>
+        </task>
         <task>
-			<name>VT1.VT104.APERAK</name>
-			<i18n-name>VT1.VT104.APERAK</i18n-name>
-			<default-name></default-name>
-		</task>        
-	</task-list>
-	<database-script>
-	</database-script>
-	<entities>
-	</entities>
-	<inbound-endpoints>		
-	</inbound-endpoints>
-	<outbound-endpoints>				
-	</outbound-endpoints>
-	<partner-endpoint-mapping>		
-	</partner-endpoint-mapping>
+            <name>DEM.DEM03.APERAK</name>
+            <i18n-name>dem.task.DEM.DEM03.APERAK</i18n-name>
+            <default-name>Réception Rejet Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <category>APERAK</category>
+        </task>
+        <task>
+            <name>DEM.DEM02.APERAK</name>
+            <i18n-name>dem.task.DEM.DEM02.APERAK</i18n-name>
+            <default-name>Réception Demande Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <category>APERAK</category>
+        </task>
+        <task>
+            <name>DEM.DEM04.APERAK</name>
+            <i18n-name>dem.task.DEM.DEM04.APERAK</i18n-name>
+            <default-name>Réception Certificat Declaration d'existence MINCOMMERCE</default-name>
+            <category>APERAK</category>
+        </task>
+    </task-list>
+    <database-script>
+    </database-script>
+    <entities>
+    </entities>
+    <inbound-endpoints>
+    </inbound-endpoints>
+    <outbound-endpoints>
+    </outbound-endpoints>
+    <partner-endpoint-mapping>
+        <partner-endpoint>
+            <partner-id>MINCOMMERCE</partner-id>
+            <endpoint-id>orchestra.ext.siat.endpoint.out</endpoint-id>
+        </partner-endpoint>
+    </partner-endpoint-mapping>
 </orchestra-process>

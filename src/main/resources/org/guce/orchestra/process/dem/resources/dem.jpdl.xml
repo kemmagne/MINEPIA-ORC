@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="DEM" xmlns="http://jbpm.org/4.4/jpdl">
+    <start g="13,25,48,48" name="start1">
+        <transition to="Initialisation"/>
+    </start>
+    <java class="org.guce.orchestra.process.dem.activity.Initializer" g="-14,86,92,52" method="init" name="Initialisation" var="request">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </java>
+    <java class="org.guce.orchestra.process.dem.activity.CheckInitMessageAndGenerateResponse" g="101,91,148,52" method="execute" name="CheckInitMessageAndGenerateResponse" var="initResponse">
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="exclusive3"/>
+    </java>
+    <decision expr="#{initResponse.action}" g="266,35,48,48" name="exclusive3">
+        <transition to="checkIfRecordPayed" name="DEM01" g="-5,-20"/>
+        <transition to="sendDEM11" name="DEM11" g="-5,-20"/>
+        <transition to="sendDEM09" name="DEM09" g="-5,-20"/>
+        <transition to="sendInitAperak" name="APERAK_C" g="-5,-20"/>
+    </decision>
+    <decision expr="#{request.recordPayed}" name="checkIfRecordPayed">
+        <transition to="sendDEM01" name="true" />
+        <transition to="sendVT601Notification" name="false" />
+    </decision>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendDEM01" >
+        <transition to="DEM.DEM01.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendDEM11" >
+        <transition to="DEM.DEM01.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="244,140,92,52" expr="#{initResponse.messages}" name="sendInitAperak">
+        <transition to="DEM.DEM01"/>
+    </mule-send>
+    <task g="108,200,133,52" name="DEM.DEM01" assignee="#{request.importateurPartner}">
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </task>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" expr="#{initResponse.notification601}" name="sendVT601Notification">
+        <transition to="process_payment_dem"/>
+    </mule-send>
+    <sub-process name="process_payment_dem"
+                 sub-process-key="PAYMENT">
+        <parameter-in subvar="incoming" expr="#{initResponse.demPayment}" />
+        <parameter-out var="payment" subvar="pay602Response" />
+        <transition to="ProcessResponseVT602Receive" />
+    </sub-process>
+    <java g="651,188,138,52" name="ProcessResponseVT602Receive" class="org.guce.orchestra.process.dem.activity.ProcessResponse" method="updatePaymentState" var="rp602Payed">
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <transition to="exclusive7"/>
+    </java>
+    
+    <decision g="362,224,48,48" name="exclusive7" expr="true">
+        <transition to="ProcessVT602" name="true" g="-5,-20"/>
+        <transition to="DEM.DEM01" name="false" g="-25,-18"/>
+    </decision>
+    
+    <java g="651,188,138,52" name="ProcessVT602" class="org.guce.orchestra.process.dem.activity.ProcessResponse" method="execute" var="vt602Response">
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{payment}"/>
+        </arg>
+        <transition to="exclusivePaymentOK"/>
+    </java>
+    <decision expr="#{vt602Response.action}" g="266,35,48,48" name="exclusivePaymentOK">
+        <transition to="sendVT602Notification" name="DEM01" g="-5,-20"/>
+        <transition to="sendVT602Notification" name="DEM11" g="-5,-20"/>
+        <transition to="sendDEM09VT602Notification" name="DEM09" g="-5,-20"/>
+    </decision>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{vt602Response.notification602}" name="sendVT602Notification">
+        <transition to="sendVT01AfterPayment"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{vt602Response.notification602}" name="sendDEM09VT602Notification">
+        <transition to="sendDEM09AfterPayment"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{vt602Response.vtMessage}" name="sendVT01AfterPayment" >
+        <!--transition to="DEM.DEM01.APERAK"/-->
+        <transition to="DEM.DEM04"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{vt602Response.vtMessage}" name="sendDEM09AfterPayment" >
+        <transition to="DEM.DEM09.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendDEM09" >
+        <transition to="DEM.DEM09.APERAK"/>
+    </mule-send>     
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendDEM04" >
+        <transition to="DEM.DEM04.APERAK"/>
+    </mule-send>
+    <task g="108,200,133,52" name="DEM.DEM02" assignee="#{request.importateurPartner}">
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </task>
+    <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="DEM.DEM01.APERAK">
+        <transition to="CheckAperakDEM01"/>
+    </task>    
+    <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakDEM01" var="ackDEM01">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakDEM01"/>
+    </java>    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackDEM01}" name="sendAperakDEM01">
+        <transition to="exclusive1"/>
+    </mule-send>   
+    <decision g="362,224,48,48" name="exclusive1" expr="#{ackDEM01.action}">
+        <transition to="DEM.DEM01.APERAK" name="APERAK_J" g="-5,-20"/>        
+        <transition to="DEM.DEM04" name="APERAK_D" g="-5,-20"/>
+        <transition to="DEM.DEM01.APERAK" name="APERAK_C" g="-25,-18"/>
+    </decision>
+    <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="DEM.DEM09.APERAK">
+        <transition to="CheckAperakDEM09"/>
+    </task>    
+    <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakDEM09" var="ackDEM09">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakDEM09"/>
+    </java>    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackDEM09}" name="sendAperakDEM09">
+        <transition to="exclusive1M"/>
+    </mule-send>   
+    <decision g="362,224,48,48" name="exclusive1M" expr="#{ackDEM09.action}">
+        <transition to="DEM.DEM09.APERAK" name="APERAK_J" g="-5,-20"/>        
+        <transition to="DEM.DEM04" name="APERAK_D" g="-5,-20"/>
+        <transition to="DEM.DEM09.APERAK" name="APERAK_C" g="-25,-18"/>
+    </decision>    
+    
+    
+     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendDEM.DEM02">
+        <transition to="DEM.DEM02.APERAK"/>
+    </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendDEM.DEM03">
+        <transition to="DEM.DEM03.APERAK"/>
+    </mule-send>
+
+    <task g="517,127,136,52" name="DEM.DEM04"  assignee="#{request.recieverPartner}">
+        <transition to="ProcessResponse"/>
+    </task>
+    <java g="651,188,138,52" name="ProcessResponse" class="org.guce.orchestra.process.dem.activity.ProcessResponse" method="execute" var="rp001Response">
+        <field name="actions">
+            <string value="DEM03,DEM02,DEM04, DEM10" />
+        </field>
+        <arg>
+            <object expr="#{request}"/>
+        </arg>
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendDEM01Response"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp001Response.messages}" name="sendDEM01Response">
+        <transition to="exclusive2"/>
+    </mule-send>
+    <decision g="443,359,48,48" name="exclusive2" expr="#{rp001Response.action}">
+        <transition to="DEM.DEM02.APERAK" name="DEM02" g="-5,-20"/>
+        <transition to="DEM.DEM04" name="APERAK_C" g="-5,-20"/>
+        <transition to="DEM.DEM03.APERAK" name="DEM03" g="-5,-20"/>
+        <transition to="DEM.DEM04.APERAK" name="DEM04" g="-5,-20"/>
+        <transition to="DEM.DEM04.APERAK" name="DEM10" g="-5,-20"/>
+    </decision>
+    <task g="579,417,92,52" name="DEM.DEM03.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="ChekAperakDEM03"/>
+    </task>
+    <java g="679,459,105,52" name="ChekAperakDEM03" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackDEM03">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakDEM03"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackDEM03}" name="sendAperakDEM03">
+        <transition to="end1"/>
+    </mule-send>
+    <task g="272,309,92,52" name="DEM.DEM02.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="ChekAperakDEM02"/>
+    </task>
+    <java g="64,329,139,52" name="ChekAperakDEM02" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackDEM02">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakDEM02"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="-4,258,127,52" expr="#{ackDEM02}" name="sendAperakDEM02">
+        <transition to="DEM.DEM02"/>
+    </mule-send>
+    <task g="311,388,92,52" name="DEM.DEM04.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="CheckAperakDEM04"/>
+    </task>
+    <java g="182,464,124,52" name="CheckAperakDEM04" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackDEM04">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakDEM04"/>
+    </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="254,548,128,52" expr="#{ackDEM04}" name="sendAperakDEM04">
+        <transition to="end1"/>
+    </mule-send>
+    <end g="511,483,48,48" name="end1"/>
+</process>
