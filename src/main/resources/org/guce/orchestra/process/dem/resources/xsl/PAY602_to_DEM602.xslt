@@ -10,21 +10,15 @@ http://www.altova.com/mapforce
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
     <xsl:output method="xml" encoding="UTF-8" indent="yes"/>
-    <xsl:param name="param_document_code"/>
-    <xsl:param name="param_service_code"/>
-    <xsl:param name="param_numero_dossier"/>
-    <xsl:param name="param_numero_demande"/>
-    <xsl:param name="param_type_facture"/>
-    <xsl:param name="param_reference_facture"/>
     <xsl:template match="/">
         <DOCUMENT>
-            <xsl:attribute name="xsi:noNamespaceSchemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance"></xsl:attribute>
+            <xsl:attribute name="xsi:noNamespaceSchemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">C:/Users/LISSOUCK/Documents/NetBeansProjects/guce/guce-vt1/src/main/resources/org/guce/orchestra/process/vt1/schemas/vt1.xsd</xsl:attribute>
             <xsl:for-each select="DOCUMENT">
                 <xsl:variable name="var1_resultof_first" select="MESSAGE"/>
                 <xsl:variable name="var2_resultof_first" select="REFERENCE_DOSSIER"/>
                 <xsl:variable name="var3_resultof_first" select="ROUTAGE"/>
                 <TYPE_DOCUMENT>
-                    <xsl:value-of select="$param_document_code"/>
+                    <xsl:value-of select="string(TYPE_DOCUMENT)"/>
                 </TYPE_DOCUMENT>
                 <MESSAGE>
                     <TYPE_MESSAGE>
@@ -48,13 +42,13 @@ http://www.altova.com/mapforce
                 </MESSAGE>
                 <REFERENCE_DOSSIER>
                     <NUMERO_DOSSIER>
-                        <xsl:value-of select="$param_numero_dossier"/>
+                        <xsl:value-of select="string($var2_resultof_first/NUMERO_DEMANDE)"/>
                     </NUMERO_DOSSIER>
                     <NUMERO_DEMANDE>
-                        <xsl:value-of select="$param_numero_demande"/>
+                        <xsl:value-of select="string($var2_resultof_first/NUMERO_DEMANDE)"/>
                     </NUMERO_DEMANDE>
                     <SERVICE>
-                        <xsl:value-of select="$param_service_code"/>
+                        <xsl:value-of select="string($var2_resultof_first/SERVICE)"/>
                     </SERVICE>
                     <REFERENCE_GUCE>
                         <xsl:value-of select="string($var2_resultof_first/REFERENCE_GUCE)"/>
@@ -77,37 +71,16 @@ http://www.altova.com/mapforce
                         <xsl:value-of select="string($var3_resultof_first/DESTINATAIRE)"/>
                     </DESTINATAIRE>
                 </ROUTAGE>
-                <xsl:for-each select="ERREURS">
-                    <ERREURS>
-                        <xsl:for-each select="ERREUR">
-                            <ERREUR>
-                                <xsl:for-each select="CODE_ERREUR">
-                                    <CODE_ERREUR>
-                                        <xsl:value-of select="string(.)"/>
-                                    </CODE_ERREUR>
-                                </xsl:for-each>
-                                <xsl:for-each select="LIBELLE_ERREUR">
-                                    <LIBELLE_ERREUR>
-                                        <xsl:value-of select="string(.)"/>
-                                    </LIBELLE_ERREUR>
-                                </xsl:for-each>
-                                <xsl:for-each select="REFERENCE_DONNEE">
-                                    <REFERENCE_DONNEE>
-                                        <xsl:value-of select="string(.)"/>
-                                    </REFERENCE_DONNEE>
-                                </xsl:for-each>
-                            </ERREUR>
-                        </xsl:for-each>
-                    </ERREURS>
-                </xsl:for-each>
                 <CONTENT>
                     <xsl:for-each select="CONTENT/PAIEMENT">
                         <PAIEMENT>
                             <xsl:for-each select="FACTURE">
                                 <FACTURE>
-                                    <REFERENCE_FACTURE>
-                                        <xsl:value-of select="$param_reference_facture"/>
-                                    </REFERENCE_FACTURE>
+                                    <xsl:for-each select="REFERENCE_FACTURE">
+                                        <REFERENCE_FACTURE>
+                                            <xsl:value-of select="string(.)"/>
+                                        </REFERENCE_FACTURE>
+                                    </xsl:for-each>
                                     <xsl:for-each select="DETAIL_FACTURES">
                                         <DETAIL_FACTURES>
                                             <xsl:for-each select="DETAIL_FACTURE">
@@ -166,9 +139,11 @@ http://www.altova.com/mapforce
                                             <xsl:value-of select="string(.)"/>
                                         </AUTRE_MONTANT>
                                     </xsl:for-each>
-                                    <TYPE_FACTURE>
-                                        <xsl:value-of select="$param_type_facture"/>
-                                    </TYPE_FACTURE>
+                                    <xsl:for-each select="TYPE_FACTURE">
+                                        <TYPE_FACTURE>
+                                            <xsl:value-of select="string(.)"/>
+                                        </TYPE_FACTURE>
+                                    </xsl:for-each>
                                 </FACTURE>
                             </xsl:for-each>
                             <xsl:for-each select="SIGNATAIRE">
@@ -394,34 +369,6 @@ http://www.altova.com/mapforce
                                         </LIBELLE>
                                     </xsl:for-each>
                                 </BENEFICIAIRE>
-                            </xsl:for-each>
-                            <xsl:for-each select="REPARTITIONS">
-                                <REPARTITIONS>
-                                    <xsl:for-each select="REPARTITION">
-                                        <REPARTITION>
-                                            <xsl:for-each select="CODE_BENIF">
-                                                <CODE_BENIF>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </CODE_BENIF>
-                                            </xsl:for-each>
-                                            <xsl:for-each select="TYPE_DOSSIER">
-                                                <TYPE_DOSSIER>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </TYPE_DOSSIER>
-                                            </xsl:for-each>
-                                            <xsl:for-each select="MONTANT">
-                                                <MONTANT>
-                                                    <xsl:value-of select="string(number(string(.)))"/>
-                                                </MONTANT>
-                                            </xsl:for-each>
-                                            <xsl:for-each select="MONTANT_STRING">
-                                                <MONTANT_STRING>
-                                                    <xsl:value-of select="string(.)"/>
-                                                </MONTANT_STRING>
-                                            </xsl:for-each>
-                                        </REPARTITION>
-                                    </xsl:for-each>
-                                </REPARTITIONS>
                             </xsl:for-each>
                         </PAIEMENT>
                     </xsl:for-each>

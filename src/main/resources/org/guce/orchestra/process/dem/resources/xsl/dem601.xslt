@@ -91,6 +91,11 @@
                 </xsl:for-each>
                 <xsl:for-each select="CONTENT">
                     <CONTENT>
+                        <xsl:for-each select="CODE_BUREAU">
+                            <CODE_BUREAU>
+                                <xsl:value-of select="string(.)"/>
+                            </CODE_BUREAU>
+                        </xsl:for-each>
                         <xsl:for-each select="NUMERO_DEM_MINCOMMERCE">
                             <NUMERO_DEM_MINCOMMERCE>
                                 <xsl:value-of select="string(.)"/>
@@ -101,15 +106,21 @@
                                 <xsl:value-of select="string(.)"/>
                             </DATE_DEM_MINEPDED>
                         </xsl:for-each>
-                        <xsl:for-each select="DECLARATION">
+                          <xsl:for-each select="DECLARATION">
                             <DECLARATION>
-                                <xsl:for-each select="DEM_DECLARATION">
-                                    <DEM_DECLARATION>
-                                    <xsl:value-of select="string(.)"/>
-                                    </DEM_DECLARATION>
-                                </xsl:for-each>
-                            </DECLARATION>
-                        </xsl:for-each>
+                                <xsl:for-each select="DECLARATION">
+                                    <DECLARATION>
+                                        <xsl:for-each select="DEM_DECLARATION">
+                                               <DEM_DECLARATION>
+                                                 <xsl:value-of select="string(.)"/>
+                                             </DEM_DECLARATION>
+                                      </xsl:for-each>
+                                  </DECLARATION>
+                             </xsl:for-each>
+                               
+                         </DECLARATION>
+                      </xsl:for-each>
+                           
                         <xsl:for-each select="CLIENT">
                             <CLIENT>
                                 <xsl:for-each select="NUMERO_CONTRIBUABLE">

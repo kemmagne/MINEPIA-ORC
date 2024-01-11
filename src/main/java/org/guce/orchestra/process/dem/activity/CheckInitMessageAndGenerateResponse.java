@@ -114,6 +114,8 @@ public class CheckInitMessageAndGenerateResponse extends CustomActivity {
         t.setParameter("param_service_code", PAYMENTConstants.PROCESS_ID);
         t.setParameter("param_numero_dossier", request.getDossier().getNumeroDossier() + "PAY");
         t.setParameter("param_numero_demande", request.getDossier().getNumeroDossier());
+        t.setParameter("param_reference_facture", request.getDossier().getNumeroDossier());
+        t.setParameter("param_reference_facture", request.getDossier().getNumeroDossier());
         if (StringUtils.isNotEmpty(ebxmlMessage.getMessageHeader().getConversationId())) {
             t.setParameter("param_reference_guce", ebxmlMessage.getMessageHeader().getConversationId());
         }

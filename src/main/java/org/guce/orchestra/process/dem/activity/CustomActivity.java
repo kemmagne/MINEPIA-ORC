@@ -43,7 +43,7 @@ public abstract class CustomActivity {
         if (transformBefore) {
             //Transformation du message avant la validation
             transformData = this.getDocument(ebxmlMessage);
-            InputStream is = new ByteArrayInputStream(transformData); 
+            InputStream is = new ByteArrayInputStream(transformData);
             aperak = ValidatorUtil.validateWithSchema(ebxmlMessage, is, url);
             IOUtils.closeQuietly(is);
         } else {

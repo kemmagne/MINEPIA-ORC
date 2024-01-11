@@ -226,7 +226,7 @@ public class ProcessResponse extends CustomActivity {
         DocumentBuilder db = dbf.newDocumentBuilder();
         InputStream is = new ByteArrayInputStream(docByte);
         Document document = db.parse(is);
-        InputStream xslIs = getClass().getResourceAsStream(DEMConstants.XSL_RESSOURCE_PATH + "payment.xslt");
+        InputStream xslIs = getClass().getResourceAsStream(DEMConstants.XSL_RESSOURCE_PATH + "PAY602_to_DEM602.xslt");    
         Transformer tr = TransformerFactory.newInstance().newTransformer(new StreamSource(xslIs));
         tr.setOutputProperty(OutputKeys.INDENT, "yes");
         tr.setOutputProperty(OutputKeys.METHOD, "xml");

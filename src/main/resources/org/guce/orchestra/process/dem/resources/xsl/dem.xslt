@@ -102,14 +102,14 @@
                                 <xsl:value-of select="string(.)"/>
                             </DATE_DEM_MINEPDED>
                         </xsl:for-each>
-                        <xsl:for-each select="DECLARATION">
-                            <DECLARATION>
+                        <xsl:for-each select="DECLARATIONS">
+                            <DECLARATIONS>
                                 <xsl:for-each select="DEM_DECLARATION">
                                     <DEM_DECLARATION>
                                     <xsl:value-of select="string(.)"/>
                                     </DEM_DECLARATION>
                                 </xsl:for-each>
-                            </DECLARATION>
+                            </DECLARATIONS>
                         </xsl:for-each>
                         <xsl:for-each select="CLIENT">
                             <CLIENT>
