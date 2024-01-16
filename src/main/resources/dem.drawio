@@ -1,4 +1,4 @@
-<mxfile host="Electron" modified="2023-12-04T10:17:33.419Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="vrJ6gGYn-reilK-wGVaJ" compressed="false" version="21.7.5" type="device">
+<mxfile host="Electron" modified="2024-01-15T10:08:22.413Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="plTSX1UgcvGekMDZwEvX" compressed="false" version="21.7.5" type="device">
   <diagram id="dzslenoz5EgcA-fO8ZGD" name="Page-1">
     <mxGraphModel dx="1104" dy="508" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -44,15 +44,20 @@
             <mxGeometry y="52" width="138.42" height="26" as="geometry" />
           </mxCell>
         </object>
-        <object label="demDate" type="date" element="field" label_name="Date Declaration d&#39;exitence" column_name="DEM_DATE" max_size="" min_size="" options="" optionsClass="" nullable="" unique="" xml_element="DATE_DEM_MINEPDED" sequence="3" label_nameEn="Declaration of existence Date" id="H-aZSpLhL-oLSM1OxbNI-11">
+        <object label="demDate" type="date" element="field" label_name="Date Declaration d&#39;exitence" column_name="DEM_DATE" max_size="" min_size="" options="" optionsClass="" nullable="" unique="" xml_element="DATE_DEM_MINCOMMERCE" sequence="3" label_nameEn="Declaration of existence Date" id="H-aZSpLhL-oLSM1OxbNI-11">
           <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;shadow=0;sketch=0;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
             <mxGeometry y="78" width="138.42" height="26" as="geometry" />
           </mxCell>
         </object>
+        <object label="expDate" type="date" element="field" label_name="Date d&#39;expiration" column_name="EXP_DATE" max_size="" min_size="" options="" optionsClass="" nullable="" unique="" xml_element="EXP_DATE_MIN" sequence="5" label_nameEn="Expire Date" id="ENEW6Ok7iUvjIcU-u-66-2">
+          <mxCell style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;connectable=0;allowArrows=0;autosize=0;resizable=0;shadow=0;sketch=0;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
+            <mxGeometry y="104" width="138.42" height="26" as="geometry" />
+          </mxCell>
+        </object>
         <mxCell id="Sb3ObpHVFGHvWsoK8jhT-7" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;fontSize=11;" parent="Sb3ObpHVFGHvWsoK8jhT-5" vertex="1">
-          <mxGeometry y="104" width="138.42" height="39.922600167342175" as="geometry" />
+          <mxGeometry y="130" width="138.42" height="39.922600167342175" as="geometry" />
         </mxCell>
-        <object label="declarations" join_table="" join_column="" inverse_join_column="" mapped_by="" unique="" cascade="" inverse_name="" element="relation" fetch_type="" orphan_removal="" xml_element="DECLARATION" sequence="6" label_name="Type de declaration" label_nameEn="Type of declaration" id="KvWwAyJbcnlXMrYyn6Tw-4">
+        <object label="declarations" join_table="" join_column="" inverse_join_column="" mapped_by="" unique="" cascade="" inverse_name="" element="relation" fetch_type="" orphan_removal="" xml_element="DECLARATION" sequence="4" label_name="Type de declaration" label_nameEn="Type of declaration" id="KvWwAyJbcnlXMrYyn6Tw-4">
           <mxCell style="endArrow=classic;shadow=0;strokeWidth=1;rounded=0;endFill=1;elbow=vertical;endSize=10;startSize=10;sourcePerimeterSpacing=0;startArrow=oval;startFill=1;align=center;snapToPoint=1;targetPerimeterSpacing=0;fontSize=11;spacingRight=0;spacingBottom=2;spacing=0;fixDash=1;" parent="Sb3ObpHVFGHvWsoK8jhT-4" source="Sb3ObpHVFGHvWsoK8jhT-5" target="KvWwAyJbcnlXMrYyn6Tw-1" edge="1">
             <mxGeometry x="-0.0123" relative="1" as="geometry">
               <mxPoint x="600" y="168" as="sourcePoint" />

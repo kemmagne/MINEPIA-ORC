@@ -97,12 +97,26 @@
                                 <xsl:value-of select="string(.)"/>
                             </NUMERO_DEM_MINCOMMERCE>
                         </xsl:for-each>
-                        <xsl:for-each select="DATE_DEM_MINEPDED">
-                            <DATE_DEM_MINEPDED>
+                        <xsl:for-each select="DATE_DEM_MINCOMMERCE">
+                            <DATE_DEM_MINCOMMERCE>
                                 <xsl:value-of select="string(.)"/>
-                            </DATE_DEM_MINEPDED>
+                            </DATE_DEM_MINCOMMERCE>
                         </xsl:for-each>
-                        <xsl:for-each select="DECLARATIONS">
+                        <xsl:for-each select="EXP_DATE_MIN">
+                            <EXP_DATE_MIN>
+                                <xsl:value-of select="string(.)"/>
+                            </EXP_DATE_MIN>
+                        </xsl:for-each>
+                        
+                        
+                         <xsl:for-each select="OPERATOR_NAME">
+                                    <OPERATOR_NAME>
+                                    <xsl:value-of select="string(.)"/>
+                                    </OPERATOR_NAME>
+                          </xsl:for-each>
+                        
+                        
+                          <xsl:for-each select="DECLARATIONS">
                             <DECLARATIONS>
                                 <xsl:for-each select="DEM_DECLARATION">
                                     <DEM_DECLARATION>
@@ -111,6 +125,7 @@
                                 </xsl:for-each>
                             </DECLARATIONS>
                         </xsl:for-each>
+                        
                         <xsl:for-each select="CLIENT">
                             <CLIENT>
                                 <xsl:for-each select="NUMERO_CONTRIBUABLE">

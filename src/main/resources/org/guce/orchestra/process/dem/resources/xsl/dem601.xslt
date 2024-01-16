@@ -101,14 +101,28 @@
                                 <xsl:value-of select="string(.)"/>
                             </NUMERO_DEM_MINCOMMERCE>
                         </xsl:for-each>
-                        <xsl:for-each select="DATE_DEM_MINEPDED">
-                            <DATE_DEM_MINEPDED>
+                        <xsl:for-each select="DATE_DEM_MINCOMMERCE">
+                            <DATE_DEM_MINCOMMERCE>
                                 <xsl:value-of select="string(.)"/>
-                            </DATE_DEM_MINEPDED>
+                            </DATE_DEM_MINCOMMERCE>
+                        </xsl:for-each>
+                        <xsl:for-each select="EXP_DATE_MIN">
+                            <EXP_DATE_MIN>
+                                <xsl:value-of select="string(.)"/>
+                            </EXP_DATE_MIN>
                         </xsl:for-each>
                         
-                         <xsl:for-each select="DECLARATION">
-                            <DECLARATION>
+                         <xsl:for-each select="OPERATOR_NAME">
+                                    <OPERATOR_NAME>
+                                    <xsl:value-of select="string(.)"/>
+                                    </OPERATOR_NAME>
+                          </xsl:for-each>
+                         
+                         
+                         
+
+                         <xsl:for-each select="DECLARATIONS">
+                            <DECLARATIONS>
                                 <xsl:for-each select="DECLARATION">
                                     <DECLARATION>
                                         <xsl:for-each select="DEM_DECLARATION">
@@ -118,11 +132,11 @@
                                       </xsl:for-each>
                                   </DECLARATION>
                              </xsl:for-each>
-                               
-                         </DECLARATION>
+                         </DECLARATIONS>
                       </xsl:for-each>
                         
-                           
+                        
+                        
                         <xsl:for-each select="CLIENT">
                             <CLIENT>
                                 <xsl:for-each select="NUMERO_CONTRIBUABLE">
@@ -474,9 +488,11 @@
                                     <xsl:value-of select="string(.)"/>
                                     </AUTRE_MONTANT>
                                     </xsl:for-each>
+                                    <xsl:for-each select="TYPE_FACTURE">
                                     <TYPE_FACTURE>
-                                        <xsl:value-of select="$param_type_facture"/>
+                                       <xsl:value-of select="$param_type_facture"/>
                                     </TYPE_FACTURE>
+                                    </xsl:for-each>
                                     </FACTURE>
                                 </xsl:for-each>
                                 <xsl:for-each select="SIGNATAIRE">
