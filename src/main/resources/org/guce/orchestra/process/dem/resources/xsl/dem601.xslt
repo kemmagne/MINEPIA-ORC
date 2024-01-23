@@ -134,6 +134,21 @@
                              </xsl:for-each>
                          </DECLARATIONS>
                       </xsl:for-each>
+                      
+                      
+                       <xsl:for-each select="DECLARATIONS">
+                            <DECLARATIONS>
+                                <xsl:for-each select="DECLARATION">
+                                    <DECLARATION>
+                                        <xsl:for-each select="DEM_DECLARATION">
+                                               <DEM_DECLARATION>
+                                                 <xsl:value-of select="string(.)"/>
+                                             </DEM_DECLARATION>
+                                      </xsl:for-each>
+                                  </DECLARATION>
+                             </xsl:for-each>
+                         </DECLARATIONS>
+                      </xsl:for-each>
                         
                         
                         

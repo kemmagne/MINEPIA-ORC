@@ -218,7 +218,7 @@
                             <xs:element minOccurs="0" name="OPERATOR_NAME">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
-                                    <xs:maxLength value="8"/>
+                                    <xs:maxLength value="35"/>
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>

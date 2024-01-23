@@ -215,13 +215,16 @@
                                     </xs:element>
                             
                             
-                            <xs:element minOccurs="0" name="OPERATOR_NAME">
+                            <xs:element name="OPERATOR_NAME">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
-                                    <xs:maxLength value="8"/>
+                                    <xs:maxLength value="35"/>
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            
+                 
+                            
                             <xs:element minOccurs="0" name="DECLARATION">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -235,6 +238,9 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
+                            
+                            
+                            
                             <xs:element minOccurs="0" name="CLIENT">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -678,7 +684,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            <xs:element minOccurs="0" name="PAIEMENT">
+<!--                            <xs:element minOccurs="0" name="PAIEMENT">
                                 <xs:complexType>
                                     <xs:sequence>
                                     <xs:element minOccurs="0" name="FACTURE">
@@ -1288,7 +1294,7 @@
                                     </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
-                            </xs:element>
+                            </xs:element>-->
                             <xs:element minOccurs="0" name="SIGNATAIRE">
                                 <xs:complexType>
                                     <xs:sequence>
