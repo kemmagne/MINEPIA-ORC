@@ -186,6 +186,13 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            <xs:element minOccurs="0" name="OPERATOR_NAME">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                    <xs:maxLength value="2000"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
                             <xs:element minOccurs="0" name="DATE_DEM_MINCOMMERCE">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
@@ -193,38 +200,13 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-<!--                            <xs:element minOccurs="0" name="EXP_DATE_MIN">
+                            <xs:element minOccurs="0" name="EXP_DATE_MIN">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
                                     <xs:maxLength value="8"/>
                                     </xs:restriction>
                                 </xs:simpleType>
-                            </xs:element>-->
-                            
-                           <xs:element
-                                    minOccurs="0" name="EXP_DATE_MIN">
-                                    <xs:simpleType>
-
-                                    <xs:restriction base="xs:string">
-
-                                    <xs:length value="8"/>
-
-                                    <xs:pattern value="((20|19)[0-9][0-9])(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])"/>
-                                    </xs:restriction>
-                                    </xs:simpleType>
-                                    </xs:element>
-                            
-                            
-                            
-                            <xs:element name="OPERATOR_NAME">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                    <xs:maxLength value="35"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
                             </xs:element>
-                            
-                            
                             <xs:element minOccurs="0" name="DECLARATION">
                                 <xs:complexType>
                                     <xs:sequence>

@@ -223,8 +223,6 @@
                                 </xs:simpleType>
                             </xs:element>
                             
-                 
-                            
                             <xs:element minOccurs="0" name="DECLARATION">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -238,8 +236,7 @@
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
-                            
-                            
+                                                        
                             
                             <xs:element minOccurs="0" name="CLIENT">
                                 <xs:complexType>
