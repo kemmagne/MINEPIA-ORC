@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.guce.orchestra.process</groupId>
-    <artifactId>guce-dem</artifactId>
-    <version>1.0.0-beta.1</version>
+    <artifactId>guce-atm</artifactId>
+    <version>1.0.1-beta.3</version>
     <packaging>jar</packaging>
 
-    <name>guce-dem</name>
+    <name>guce-atm</name>
     <url>http://maven.apache.org</url>
     <build>
         <resources>
@@ -50,7 +50,7 @@
                     </execution>
                 </executions>
             </plugin>
-           <!-- <plugin>
+           <plugin>
                 <groupId>org.guce.orchestra</groupId>
                 <artifactId>orchestra-project-generator-maven-plugin</artifactId>
                 <version>0.1-SNAPSHOT</version>
@@ -62,9 +62,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                   <design>src/main/resources/dem.drawio</design> 
+<!--                   <design>src/main/resources/atm.drawio</design> -->
                 </configuration>
-            </plugin> -->
+            </plugin>
             
             
             
@@ -81,8 +81,8 @@
                 </executions>
                 <configuration>
                     <target>2.1</target>
-                    <schemaDirectory>${basedir}/src/main/resources/org/guce/orchestra/process/dem/resources/xsd</schemaDirectory>
-                    <packageName>org.guce.orchestra.process.dem.binding</packageName>
+                    <schemaDirectory>${basedir}/src/main/resources/org/guce/orchestra/process/atm/resources/xsd</schemaDirectory>
+                    <packageName>org.guce.orchestra.process.atm.binding</packageName>
                     <outputDirectory>${build.directory}/generated-sources/jaxb</outputDirectory>
                     <verbose>false</verbose>
                 </configuration>
@@ -94,14 +94,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <conf_process_code_maj>DEM</conf_process_code_maj><!--Code de la procédure en majuscule-->    
-        <conf_process_code_min>dem</conf_process_code_min><!--Code de la procédure en majuscule-->    
-        <conf_process_description>Declaration d'existence mincommmerce</conf_process_description><!--Code de la procédure en majuscule-->    
-        <conf_message_type_prefix>DEM</conf_message_type_prefix><!--Préfixe des action, ou code de messages-->
+        <conf_process_code_maj>ATM</conf_process_code_maj><!--Code de la procédure en majuscule-->    
+        <conf_process_code_min>atm</conf_process_code_min><!--Code de la procédure en majuscule-->    
+        <conf_process_description>Avis Technique MINEPIA</conf_process_description><!--Code de la procédure en majuscule-->    
+        <conf_message_type_prefix>AM</conf_message_type_prefix><!--Préfixe des action, ou code de messages-->
         <conf_include_payment>true</conf_include_payment><!--true pour inclure l'étape de paiement, false sinon -->    
         <conf_include_notification>false</conf_include_notification><!--true pour notifier le parent de la facture et du reçue, false sinon-->    
-        <conf_bill_code>DEM601</conf_bill_code><!--Code du message de réception de la facture-->
-        <conf_payment_code>DEM602</conf_payment_code><!--Code du message de réception de l'encaissement-->
+        <conf_bill_code>ATM601</conf_bill_code><!--Code du message de réception de la facture-->
+        <conf_payment_code>ATM602</conf_payment_code><!--Code du message de réception de l'encaissement-->
     </properties>  
 
 

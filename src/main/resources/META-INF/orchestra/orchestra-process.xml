@@ -8,26 +8,26 @@
                    xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3"
                    xsi:schemaLocation="http://www.guichetunique.org/orchestra/schema/orchestra-process http://www.guichetunique.org/orchestra/schema/orchestra-process/1.1/process.xsd">
     <process>
-        <id>dem</id>
-        <name>Declaration d'existence MINCOMMERCE</name>
+        <id>atm</id>
+        <name>Avis technique MINEPIA</name>
         <version>${version}</version>
-        <i18n-name>dem.name</i18n-name>
+        <i18n-name>atm.name</i18n-name>
         <bpms>jbpm-4.4</bpms>
-        <process-name>DEM</process-name>
-        <description>Declaration d'existence MINCOMMERCE</description>
+        <process-name>ATM</process-name>
+        <description>Avis technique MINEPIA</description>
         <initializer-group>CAD</initializer-group>
-        <processing-class>org.guce.orchestra.process.dem.DEMProcessing</processing-class>
+        <processing-class>org.guce.orchestra.process.atm.ATMProcessing</processing-class>
         <configuration>
-            <flow-config-properties-file>org/guce/orchestra/process/dem/resources/dem.properties</flow-config-properties-file>
-            <i18n-path>org/guce/orchestra/process/dem/i18n</i18n-path>
-            <params-file>org/guce/orchestra/process/dem/resources/params.properties</params-file>
+            <flow-config-properties-file>org/guce/orchestra/process/atm/resources/atm.properties</flow-config-properties-file>
+            <i18n-path>org/guce/orchestra/process/atm/i18n</i18n-path>
+            <params-file>org/guce/orchestra/process/atm/resources/params.properties</params-file>
         </configuration>
-        <process-definition-file>org/guce/orchestra/process/dem/resources/dem.jpdl.xml</process-definition-file>
+        <process-definition-file>org/guce/orchestra/process/atm/resources/atm.jpdl.xml</process-definition-file>
     </process>
     <partners>
         <partner>
-            <id>MINCOMMERCE</id>
-            <name>MINCOMMERCE</name>
+            <id>MINEPIA</id>
+            <name>MINEPIA</name>
         </partner>
     </partners>
     <groups>
@@ -52,114 +52,114 @@
     </transformers>
     <message-types>
         <message-type>
-            <type>DEM01</type>
-            <i18n-name>dem.message.DEM01</i18n-name>
-            <default-name>Demande de Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM01</type>
+            <i18n-name>atm.message.ATM01</i18n-name>
+            <default-name>Demande de Avis technique MINEPIA</default-name>
             <category>INIT</category>
         </message-type>
         <message-type>
-            <type>DEM09</type>
-            <i18n-name>dem.message.DEM09</i18n-name>
-            <default-name>Demande de modification du Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM09</type>
+            <i18n-name>atm.message.ATM09</i18n-name>
+            <default-name>Demande de modification du Avis technique MINEPIA</default-name>
             <category>INIT</category>
         </message-type>
         <message-type>
-            <type>DEM02</type>
-            <i18n-name>dem.message.DEM02</i18n-name>
-            <default-name>Demande Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM02</type>
+            <i18n-name>atm.message.ATM02</i18n-name>
+            <default-name>Demande Complément d'informations Avis technique MINEPIA</default-name>
             <category>CI_REQUEST</category>
         </message-type>
         <message-type>
-            <type>DEM03</type>
-            <i18n-name>dem.message.DEM03</i18n-name>
-            <default-name>Rejet Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM03</type>
+            <i18n-name>atm.message.ATM03</i18n-name>
+            <default-name>Rejet Demande du Avis technique MINEPIA</default-name>
             <category>REJECTION</category>
         </message-type>
         <message-type>
-            <type>DEM04</type>
-            <i18n-name>dem.message.DEM04</i18n-name>
-            <default-name>Accord du Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM04</type>
+            <i18n-name>atm.message.ATM04</i18n-name>
+            <default-name>Accord du Avis technique MINEPIA</default-name>
             <category>SIGNATURE</category>
         </message-type>
         <message-type>
-            <type>DEM10</type>
-            <i18n-name>dem.message.DEM10</i18n-name>
-            <default-name>Accord du Declaration d'existence MINCOMMERCE modifié</default-name>
+            <type>ATM10</type>
+            <i18n-name>atm.message.ATM10</i18n-name>
+            <default-name>Accord du Avis technique MINEPIA modifié</default-name>
             <category>SIGNATURE</category>
         </message-type>
         <message-type>
-            <type>DEM11</type>
-            <i18n-name>dem.message.DEM11</i18n-name>
-            <default-name>Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <type>ATM11</type>
+            <i18n-name>atm.message.ATM11</i18n-name>
+            <default-name>Complément d'informations Avis technique MINEPIA</default-name>
             <category>INIT</category>
         </message-type>
         <message-type>
-            <type>DEM601</type>
-            <i18n-name>dem.message.DEM601</i18n-name>
-            <default-name>Facturation des frais du DEM</default-name>
+            <type>ATM601</type>
+            <i18n-name>atm.message.ATM601</i18n-name>
+            <default-name>Facturation des frais du ATM</default-name>
             <category>SIGNATURE</category>
         </message-type>
         <message-type>
-            <type>DEM602</type>
-            <i18n-name>dem.message.DEM602</i18n-name>
-            <default-name>Paiement des frais du DEM</default-name>
+            <type>ATM602</type>
+            <i18n-name>atm.message.ATM602</i18n-name>
+            <default-name>Paiement des frais du ATM</default-name>
             <category>SIGNATURE</category>
         </message-type>
     </message-types>
     <processing-types></processing-types>
     <task-list>
         <task>
-            <name>DEM.DEM01</name>
-            <i18n-name>dem.task.DEM.DEM01</i18n-name>
-            <default-name>Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM01</name>
+            <i18n-name>atm.task.ATM.ATM01</i18n-name>
+            <default-name>Demande du Avis technique MINEPIA</default-name>
         </task>
         <task>
-            <name>DEM.DEM02</name>
-            <i18n-name>dem.task.DEM.DEM02</i18n-name>
-            <default-name>Complément d'informations du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM02</name>
+            <i18n-name>atm.task.ATM.ATM02</i18n-name>
+            <default-name>Complément d'informations du Avis technique MINEPIA</default-name>
             <category>CI</category>
         </task>
         <task>
-            <name>DEM.DEM01.APERAK</name>
-            <i18n-name>dem.task.DEM.DEM01.APERAK</i18n-name>
-            <default-name>Réception Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM01.APERAK</name>
+            <i18n-name>atm.task.ATM.ATM01.APERAK</i18n-name>
+            <default-name>Réception Demande du Avis technique MINEPIA</default-name>
             <category>APERAK</category>
         </task>
         <task>
-            <name>DEM.DEM09.APERAK</name>
-            <i18n-name>dem.task.DEM.DEM09.APERAK</i18n-name>
-            <default-name>Réception Demande de modification du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM09.APERAK</name>
+            <i18n-name>atm.task.ATM.ATM09.APERAK</i18n-name>
+            <default-name>Réception Demande de modification du Avis technique MINEPIA</default-name>
             <category>APERAK</category>
         </task>
          <task>
-            <name>DEM.DEM601</name>
-            <i18n-name>dem.task.DEM.DEM601</i18n-name>
-            <default-name>dem.task.DEM.DEM601</default-name>
+            <name>ATM.ATM601</name>
+            <i18n-name>atm.task.ATM.ATM601</i18n-name>
+            <default-name>atm.task.ATM.ATM601</default-name>
             <category>PAYMENT</category>
             <assignee-role>CAD</assignee-role>
         </task>
         <task>
-            <name>DEM.DEM04</name>
-            <i18n-name>dem.task.DEM.DEM04</i18n-name>
-            <default-name>Traitement Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM04</name>
+            <i18n-name>atm.task.ATM.ATM04</i18n-name>
+            <default-name>Traitement Demande du Avis technique MINEPIA</default-name>
             <category>SIGNATURE</category>
         </task>
         <task>
-            <name>DEM.DEM03.APERAK</name>
-            <i18n-name>dem.task.DEM.DEM03.APERAK</i18n-name>
-            <default-name>Réception Rejet Demande du Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM03.APERAK</name>
+            <i18n-name>atm.task.ATM.ATM03.APERAK</i18n-name>
+            <default-name>Réception Rejet Demande du Avis technique MINEPIA</default-name>
             <category>APERAK</category>
         </task>
         <task>
-            <name>DEM.DEM02.APERAK</name>
-            <i18n-name>dem.task.DEM.DEM02.APERAK</i18n-name>
-            <default-name>Réception Demande Complément d'informations Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM02.APERAK</name>
+            <i18n-name>atm.task.ATM.ATM02.APERAK</i18n-name>
+            <default-name>Réception Demande Complément d'informations Avis technique MINEPIA</default-name>
             <category>APERAK</category>
         </task>
         <task>
-            <name>DEM.DEM04.APERAK</name>
-            <i18n-name>dem.task.DEM.DEM04.APERAK</i18n-name>
-            <default-name>Réception Certificat Declaration d'existence MINCOMMERCE</default-name>
+            <name>ATM.ATM04.APERAK</name>
+            <i18n-name>atm.task.ATM.ATM04.APERAK</i18n-name>
+            <default-name>Réception Certificat Avis technique MINEPIA</default-name>
             <category>APERAK</category>
         </task>
     </task-list>
@@ -173,7 +173,7 @@
     </outbound-endpoints>
     <partner-endpoint-mapping>
         <partner-endpoint>
-            <partner-id>MINCOMMERCE</partner-id>
+            <partner-id>MINEPIA</partner-id>
             <endpoint-id>orchestra.ext.siat.endpoint.out</endpoint-id>
         </partner-endpoint>
     </partner-endpoint-mapping>
