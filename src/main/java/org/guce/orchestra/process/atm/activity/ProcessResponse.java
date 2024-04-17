@@ -113,13 +113,19 @@ public class ProcessResponse extends CustomActivity {
         if (ebxmlMessage.getAction().equals(ATMConstants.ATM03)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
             request.getDossier().setStatus(Dossier.FILE_STATUS_REJECTED);
-        } else if (ebxmlMessage.getAction().equals(ATMConstants.ATM02)) {
+        }else if (ebxmlMessage.getAction().equals(ATMConstants.ATM03R)) {
+            toPartyIds = new String[]{request.getImportateurPartner()};
+            request.getDossier().setStatus(Dossier.FILE_STATUS_REJECTED);
+        }else if (ebxmlMessage.getAction().equals(ATMConstants.ATM02)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
             request.getDossier().setStatus(Dossier.FILE_STATUS_COMPLEMENT);
         } else if (ebxmlMessage.getAction().equals(ATMConstants.ATM04)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
             request.getDossier().setStatus(Dossier.FILE_STATUS_VALIDATED);
         } else if (ebxmlMessage.getAction().equals(ATMConstants.ATM10)) {
+            toPartyIds = new String[]{request.getImportateurPartner()};
+            request.getDossier().setStatus(Dossier.FILE_STATUS_VALIDATED);
+        }else if (ebxmlMessage.getAction().equals(ATMConstants.ATM10R)) {
             toPartyIds = new String[]{request.getImportateurPartner()};
             request.getDossier().setStatus(Dossier.FILE_STATUS_VALIDATED);
         } else if (ebxmlMessage.getAction().equals(ATMConstants.ATM601)) {
@@ -147,7 +153,7 @@ public class ProcessResponse extends CustomActivity {
             request.update();
             response.put("notification601", message);
         } else if (ebxmlMessage.getAction().equals(ATMConstants.ATM602)
-                || ebxmlMessage.getAction().equals("PAY602")) {
+                || ebxmlMessage.getAction().equals("PAY602")) { 
             Set<OrchestraEbxmlFields> fields = new HashSet<OrchestraEbxmlFields>();
             fields.clear();
             fields.add(OrchestraEbxmlFields.ToPartyIds);
@@ -179,10 +185,11 @@ public class ProcessResponse extends CustomActivity {
             OrchestraEbxmlMessage ebxmlInitMessage = new OrchestraEbxmlMessage(new ByteArrayInputStream(initMessage.getData()));
             OrchestraEbxmlMessage atm01Message = createATM01Message(request, ebxmlInitMessage);
             request.update();
-            response.put("action", ATMConstants.ATM01);
+            response.put("action", (ebxmlMessage.getMessageType().equals(ATMConstants.ATM01R))?ATMConstants.ATM01R:ATMConstants.ATM01);
             response.put("vtMessage", atm01Message);
             response.put("notification602", notificationMessage);
         }
+        
         request.update();
         return response;
     }

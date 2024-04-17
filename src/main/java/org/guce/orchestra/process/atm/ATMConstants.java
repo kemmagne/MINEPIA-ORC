@@ -28,6 +28,12 @@ public final class ATMConstants {
      * Rejet demande
      */
     public static final String ATM03 = "ATM03";
+
+     /**
+     * Rejet de la demande de Modification
+     */
+    public static final String ATM03R = "ATM03R";
+    
     /**
      * Complement d'information
      */
@@ -48,10 +54,22 @@ public final class ATMConstants {
      * Demande de modification
      */
     public static final String ATM09 = "ATM09";
+    
+    
+    /**
+     * Demande de renouvellement
+     */
+    public static final String ATM01R = "ATM01R";
+    
     /**
      * Document modifie
      */
     public static final String ATM10 = "ATM10";
+
+    /**
+     * Document renouvellee
+     */
+    public static final String ATM10R = "ATM10R";
 
     public static final String INIT_ACTION_PROPERTY = "atm.init.action";
 

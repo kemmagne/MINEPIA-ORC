@@ -36,9 +36,10 @@ public class ATMProcessing extends AbstractProcessProcessing implements ProcessP
     @Override
     public String processingType(OrchestraEbxmlMessage ebxml, boolean isInbound, Map params) {
         String action = ebxml.getAction();
-        if ((action.equals(ATMConstants.ATM01) && isInbound) || ((action.equals(ATMConstants.ATM11) && !isInbound))) {
+        if ((action.equals(ATMConstants.ATM01) && isInbound) || (action.equals(ATMConstants.ATM01R) && isInbound) || ((action.equals(ATMConstants.ATM11) && !isInbound))) {
             return ATMConstants.ATM01;
         } else if (action.equals(ATMConstants.ATM01)
+                || action.equals(ATMConstants.ATM01R)
                 || action.equals(ATMConstants.ATM02)
                 || action.equals(ATMConstants.ATM04)) {
             return ATMConstants.ATM04;
@@ -48,7 +49,7 @@ public class ATMProcessing extends AbstractProcessProcessing implements ProcessP
                 || action.equals(ATMConstants.ATM03)
                 || ATMConstants.ATM10.equals(action)) {
             return ATMConstants.ATM10;
-        }
+        } 
 
         return null;
     }
@@ -63,7 +64,7 @@ public class ATMProcessing extends AbstractProcessProcessing implements ProcessP
         Dossier dossier = null;
 
         String action = ebxmlMessage.getAction();
-        if (ATMConstants.ATM01.equals(action) || ATMConstants.ATM09.equals(action)) {
+        if (ATMConstants.ATM01.equals(action) || ATMConstants.ATM09.equals(action) || ATMConstants.ATM01R.equals(action)) {
             dossier = new Dossier();
             try {
                 Dossier parent = this.getParent(ebxmlMessage, "/DOCUMENT/REFERENCE_DOSSIER/NUMERO_DEMANDE");

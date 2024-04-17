@@ -558,6 +558,34 @@
                                     </xsl:for-each>
                                     </PAYS_PROVENANCE>
                                 </xsl:for-each>
+                                
+                                
+                                
+                                
+                                
+                                <xsl:for-each select="PAYS_DESTINATION">
+                                    <PAYS_PROVENANCE>
+                                    <xsl:for-each select="CODE_PAYS">
+                                    <CODE_PAYS>
+                                    <xsl:value-of select="string(.)"/>
+                                    </CODE_PAYS>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="NOM_PAYS">
+                                    <NOM_PAYS>
+                                    <xsl:value-of select="string(.)"/>
+                                    </NOM_PAYS>
+                                    </xsl:for-each>
+                                    </PAYS_PROVENANCE>
+                                </xsl:for-each>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+ 
                                 <xsl:for-each select="PAYS_ORIGINE">
                                     <PAYS_ORIGINE>
                                     <xsl:for-each select="CODE_PAYS">

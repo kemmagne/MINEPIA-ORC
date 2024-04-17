@@ -20,17 +20,30 @@
     </java>
     <decision expr="#{initResponse.action}" g="266,35,48,48" name="exclusive3">
         <transition to="checkIfRecordPayed" name="ATM01" g="-5,-20"/>
+        <transition to="checkIfRecordPayedR" name="ATM01R" g="-5,-20"/>
+
         <transition to="sendATM11" name="ATM11" g="-5,-20"/>
         <transition to="sendATM09" name="ATM09" g="-5,-20"/>
+        <transition to="sendATM09R" name="ATM09R" g="-5,-20"/>
         <transition to="sendInitAperak" name="APERAK_C" g="-5,-20"/>
     </decision>
     <decision expr="#{request.recordPayed}" name="checkIfRecordPayed">
         <transition to="sendATM01" name="true" />
         <transition to="sendVT601Notification" name="false" />
     </decision>
+     <decision expr="#{request.recordPayed}" name="checkIfRecordPayedR">
+        <transition to="sendATM01R" name="true" />
+        <transition to="sendVT601Notification" name="false" />
+    </decision>
+    
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM01" >
         <transition to="ATM.ATM01.APERAK"/>
     </mule-send>
+    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM01R" >
+        <transition to="ATM.ATM01R.APERAK"/>
+    </mule-send>
+    
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM11" >
         <transition to="ATM.ATM01.APERAK"/>
     </mule-send>
@@ -40,6 +53,11 @@
     <task g="108,200,133,52" name="ATM.ATM01" assignee="#{request.importateurPartner}">
         <transition to="CheckInitMessageAndGenerateResponse"/>
     </task>
+    
+    <task g="108,200,133,52" name="ATM.ATM01R" assignee="#{request.importateurPartner}">
+        <transition to="CheckInitMessageAndGenerateResponse"/>
+    </task>
+    
     <mule-send endpoint="endpoint.orchestra.bpm.in" expr="#{initResponse.notification601}" name="sendVT601Notification">
         <transition to="process_payment_atm"/>
     </mule-send>
@@ -59,6 +77,7 @@
     <decision g="362,224,48,48" name="exclusive7" expr="true">
         <transition to="ProcessVT602" name="true" g="-5,-20"/>
         <transition to="ATM.ATM01" name="false" g="-25,-18"/>
+        <transition to="ATM.ATM01R" name="false" g="-25,-18"/>
     </decision>
     
     <java g="651,188,138,52" name="ProcessVT602" class="org.guce.orchestra.process.atm.activity.ProcessResponse" method="execute" var="vt602Response">
@@ -74,12 +93,16 @@
         <transition to="sendVT602Notification" name="ATM01" g="-5,-20"/>
         <transition to="sendVT602Notification" name="ATM11" g="-5,-20"/>
         <transition to="sendATM09VT602Notification" name="ATM09" g="-5,-20"/>
+        <transition to="sendATM09RVT602Notification" name="ATM09R" g="-5,-20"/>
     </decision>
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{vt602Response.notification602}" name="sendVT602Notification">
         <transition to="sendVT01AfterPayment"/>
     </mule-send>
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{vt602Response.notification602}" name="sendATM09VT602Notification">
         <transition to="sendATM09AfterPayment"/>
+    </mule-send>
+     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{vt602Response.notification602}" name="sendATM09RVT602Notification">
+        <transition to="sendATM09RAfterPayment"/>
     </mule-send>
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{vt602Response.vtMessage}" name="sendVT01AfterPayment" >
         <!--transition to="ATM.ATM01.APERAK"/-->
@@ -88,9 +111,15 @@
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{vt602Response.vtMessage}" name="sendATM09AfterPayment" >
         <transition to="ATM.ATM09.APERAK"/>
     </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{vt602Response.vtMessage}" name="sendATM09RAfterPayment" >
+        <transition to="ATM.ATM09R.APERAK"/>
+    </mule-send>
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM09" >
         <transition to="ATM.ATM09.APERAK"/>
-    </mule-send>     
+    </mule-send> 
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM09R" >
+        <transition to="ATM.ATM09R.APERAK"/>
+    </mule-send>    
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="356,7,92,52" expr="#{initResponse.messages}" name="sendATM04" >
         <transition to="ATM.ATM04.APERAK"/>
     </mule-send>
@@ -99,38 +128,83 @@
     </task>
     <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="ATM.ATM01.APERAK">
         <transition to="CheckAperakATM01"/>
+    </task>
+    
+    <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="ATM.ATM01R.APERAK">
+        <transition to="CheckAperakATM01R"/>
     </task>    
+    
     <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakATM01" var="ackATM01">
         <arg>
             <object expr="#{incoming}"/>
         </arg>
         <transition to="sendAperakATM01"/>
+    </java>  
+    
+      
+     <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakATM01R" var="ackATM01">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakATM01R"/>
     </java>    
+          
+              
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackATM01}" name="sendAperakATM01">
         <transition to="exclusive1"/>
+    </mule-send> 
+    
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackATM01}" name="sendAperakATM01R">
+        <transition to="exclusive1R"/>
     </mule-send>   
+          
     <decision g="362,224,48,48" name="exclusive1" expr="#{ackATM01.action}">
         <transition to="ATM.ATM01.APERAK" name="APERAK_J" g="-5,-20"/>        
         <transition to="ATM.ATM04" name="APERAK_D" g="-5,-20"/>
         <transition to="ATM.ATM01.APERAK" name="APERAK_C" g="-25,-18"/>
+        
+    </decision>
+    
+     <decision g="362,224,48,48" name="exclusive1R" expr="#{ackATM01.action}">
+        <transition to="ATM.ATM04" name="APERAK_D" g="-5,-20"/>
+        <transition to="ATM.ATM01R.APERAK" name="APERAK_J" g="-5,-20"/>
+        <transition to="ATM.ATM01R.APERAK" name="APERAK_C" g="-25,-18"/>
     </decision>
     <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="ATM.ATM09.APERAK">
         <transition to="CheckAperakATM09"/>
+    </task>
+    <task assignee="#{request.recieverPartner}" g="498,47,120,52" name="ATM.ATM09R.APERAK">
+        <transition to="CheckAperakATM09R"/>
     </task>    
     <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakATM09" var="ackATM09">
         <arg>
             <object expr="#{incoming}"/>
         </arg>
         <transition to="sendAperakATM09"/>
-    </java>    
+    </java>
+     <java class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" g="365,91,119,52" method="processWithAck" name="CheckAperakATM09R" var="ackATM09R">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakATM09R"/>
+    </java>     
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackATM09}" name="sendAperakATM09">
         <transition to="exclusive1M"/>
-    </mule-send>   
+    </mule-send> 
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="340,152,92,52" expr="#{ackATM09R}" name="sendAperakATM09R">
+        <transition to="exclusive1M"/>
+    </mule-send>  
     <decision g="362,224,48,48" name="exclusive1M" expr="#{ackATM09.action}">
         <transition to="ATM.ATM09.APERAK" name="APERAK_J" g="-5,-20"/>        
         <transition to="ATM.ATM04" name="APERAK_D" g="-5,-20"/>
         <transition to="ATM.ATM09.APERAK" name="APERAK_C" g="-25,-18"/>
-    </decision>    
+    </decision>
+    
+    <decision g="362,224,48,48" name="exclusive2M" expr="#{ackATM09R.action}">
+        <transition to="ATM.ATM09R.APERAK" name="APERAK_J" g="-5,-20"/>        
+        <transition to="ATM.ATM04" name="APERAK_D" g="-5,-20"/>
+        <transition to="ATM.ATM09R.APERAK" name="APERAK_C" g="-25,-18"/>
+    </decision>      
     
     
      <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendATM.ATM02">
@@ -139,13 +213,16 @@
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendATM.ATM03">
         <transition to="ATM.ATM03.APERAK"/>
     </mule-send>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="628,302,140,52" expr="#{rp601Response.messages}" name="sendATM.ATM03R">
+        <transition to="ATM.ATM03R.APERAK"/>
+    </mule-send>
 
     <task g="517,127,136,52" name="ATM.ATM04"  assignee="#{request.recieverPartner}">
         <transition to="ProcessResponse"/>
     </task>
     <java g="651,188,138,52" name="ProcessResponse" class="org.guce.orchestra.process.atm.activity.ProcessResponse" method="execute" var="rp001Response">
         <field name="actions">
-            <string value="ATM03,ATM02,ATM04, ATM10" />
+            <string value="ATM03,ATM02,ATM04, ATM10,ATM03R,ATM10R" />
         </field>
         <arg>
             <object expr="#{request}"/>
@@ -162,9 +239,22 @@
         <transition to="ATM.ATM02.APERAK" name="ATM02" g="-5,-20"/>
         <transition to="ATM.ATM04" name="APERAK_C" g="-5,-20"/>
         <transition to="ATM.ATM03.APERAK" name="ATM03" g="-5,-20"/>
+        <transition to="ATM.ATM03R.APERAK" name="ATM03R" g="-5,-20"/>
         <transition to="ATM.ATM04.APERAK" name="ATM04" g="-5,-20"/>
         <transition to="ATM.ATM04.APERAK" name="ATM10" g="-5,-20"/>
+        <transition to="ATM.ATM04.APERAK" name="ATM10R" g="-5,-20"/>
     </decision>
+   
+     <task g="579,417,92,52" name="ATM.ATM03R.APERAK" assignee="#{request.importateurPartner}">
+        <transition to="ChekAperakATM03R"/>
+    </task>
+    <java g="679,459,105,52" name="ChekAperakATM03R" class="org.guce.orchestra.util.bpm.AcknowledgmentProcessor" method="processWithAck" var="ackATM03">
+        <arg>
+            <object expr="#{incoming}"/>
+        </arg>
+        <transition to="sendAperakATM03"/>
+    </java>
+    
     <task g="579,417,92,52" name="ATM.ATM03.APERAK" assignee="#{request.importateurPartner}">
         <transition to="ChekAperakATM03"/>
     </task>
@@ -174,9 +264,11 @@
         </arg>
         <transition to="sendAperakATM03"/>
     </java>
-    <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackATM03}" name="sendAperakATM03">
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackATM03R}" name="sendAperakATM03R">
         <transition to="end1"/>
     </mule-send>
+    
+    
     <task g="272,309,92,52" name="ATM.ATM02.APERAK" assignee="#{request.importateurPartner}">
         <transition to="ChekAperakATM02"/>
     </task>
@@ -186,6 +278,9 @@
         </arg>
         <transition to="sendAperakATM02"/>
     </java>
+    <mule-send endpoint="endpoint.orchestra.bpm.in" g="621,525,111,52"  expr="#{ackATM03}" name="sendAperakATM03">
+        <transition to="end1"/>
+    </mule-send>
     <mule-send endpoint="endpoint.orchestra.bpm.in" g="-4,258,127,52" expr="#{ackATM02}" name="sendAperakATM02">
         <transition to="ATM.ATM02"/>
     </mule-send>

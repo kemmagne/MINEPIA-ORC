@@ -55,7 +55,7 @@ public class CheckInitMessageAndGenerateResponse extends CustomActivity {
     }
 
     public Object execute(Request request, OrchestraEbxmlMessage ebxmlMessage) throws Exception {
-        MessageActionValidator.validates(ebxmlMessage, ATMConstants.ATM01, ATMConstants.ATM11, ATMConstants.ATM09);
+        MessageActionValidator.validates(ebxmlMessage, ATMConstants.ATM01, ATMConstants.ATM11, ATMConstants.ATM09, ATMConstants.ATM01R);
         toPartyIds = new String[]{request.getRecieverPartner()};
         request.setInitMessageId(ebxmlMessage.getMessageId());
         Dossier dossier = ServiceUtility.getDossierFacade().find(request.getDossierId());
@@ -63,7 +63,7 @@ public class CheckInitMessageAndGenerateResponse extends CustomActivity {
         ebxmlMessage.setDossier(dossier);
         this.transformBefore = true;
         Map<String, Object> response = (Map<String, Object>) this.generateResponse(ebxmlMessage);
-        if (ATMConstants.ATM01.equals(ebxmlMessage.getAction())) {
+        if (ATMConstants.ATM01.equals(ebxmlMessage.getAction()) || ATMConstants.ATM01R.equals(ebxmlMessage.getAction())) {
             OrchestraEbxmlMessage aperak = OrchestraSignalMessageGenerator.generateAcknowledgment(ebxmlMessage, ebxmlMessage.getMessageId(), OrchestraMessageClassifier.ACTION_ACKNOWLEDGMENT);
             response = new HashMap<>();
             List<OrchestraEbxmlMessage> list = new ArrayList<>();

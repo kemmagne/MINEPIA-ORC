@@ -1020,6 +1020,27 @@
                                     </xs:restriction>
                                     </xs:simpleType>
                                     </xs:element>
+                                    
+                                    
+                                    
+                                    
+                                    <xs:element minOccurs="0" name="PAYS_ORIGINE">
+                                    <xs:complexType>
+                                    <xs:sequence>
+                                    <xs:element
+                                    minOccurs="0" name="CODE_PAYS">
+                                    <xs:simpleType>
+
+                                    <xs:restriction base="xs:string">
+
+                                    <xs:maxLength value="3"/>
+                                    </xs:restriction>
+                                    </xs:simpleType>
+                                    </xs:element>
+                                    
+                                    
+                                    
+                                    
                                     <xs:element
                                     minOccurs="0" name="NOM_PAYS">
                                     <xs:simpleType>
