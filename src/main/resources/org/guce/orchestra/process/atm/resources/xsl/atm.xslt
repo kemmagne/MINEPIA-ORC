@@ -92,6 +92,20 @@
                                 <xsl:value-of select="string(.)"/>
                             </CODE_BUREAU>
                         </xsl:for-each>
+                        
+                        <xsl:for-each select="IS_RENEW">
+                            <IS_RENEW>
+                                <xsl:value-of select="string(.)"/>
+                            </IS_RENEW>
+                        </xsl:for-each>
+                        
+                        
+                         <xsl:for-each select="TYPEAVIS">
+                            <TYPEAVIS>
+                                <xsl:value-of select="string(.)"/>
+                            </TYPEAVIS>
+                        </xsl:for-each>
+
                         <xsl:for-each select="NUMERO_VT_MINEPIA">
                             <NUMERO_VT_MINEPIA>
                                 <xsl:value-of select="string(.)"/>

@@ -179,6 +179,23 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
+                            
+                             <xs:element minOccurs="0" name="IS_RENEW">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                    <xs:maxLength value="35"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            
+                             <xs:element minOccurs="0" name="TYPEAVIS">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                    <xs:maxLength value="35"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            
                             <xs:element minOccurs="0" name="NUMERO_VT_MINEPIA">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">
